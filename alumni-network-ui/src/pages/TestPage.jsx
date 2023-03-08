@@ -7,12 +7,11 @@ function UserComponent() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const accessToken = keycloak.token;
-                const response = await fetch('https://localhost:7240/api/Users/4', {
+                const response = await fetch('https://localhost:7240/api/Users', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + accessToken
+                        'Authorization': 'Bearer ' + keycloak.token
                     }
                 });
                 const data = await response.json();
