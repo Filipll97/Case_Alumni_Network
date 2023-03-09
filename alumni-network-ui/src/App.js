@@ -15,7 +15,14 @@ function App() {
       <main className="container">
         <Routes>
           <Route path="/" element={<DashboardPage />} />
-          <Route path="/test" element={<TestPage />} />
+          {/* <Route
+            path="/test"
+            element={
+              <KeycloakRoute role={ROLES.User}>
+                <TestPage />
+              </KeycloakRoute>
+            }
+          /> */}
           {/* <Route path="/products/:productId" element={<EditProfilePage />} /> */}
           <Route
             path="/profile"

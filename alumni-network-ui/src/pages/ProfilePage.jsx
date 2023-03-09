@@ -12,6 +12,7 @@ function ProfilePage() {
                     <p>Name: {keycloak.tokenParsed.name}</p>
                     <p>Username: {keycloak.tokenParsed.preferred_username}</p>
                     <p>Sub: {keycloak.tokenParsed.sub}</p>
+                    <pre>{keycloak.token}</pre>
 
                 </div>
             }

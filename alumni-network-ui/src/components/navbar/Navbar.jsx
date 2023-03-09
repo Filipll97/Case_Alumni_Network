@@ -11,13 +11,16 @@ function Navbar() {
                         <li>
                             <Link to="/">Start</Link>
                         </li>
-                        <li>
-                            <Link to="/test">Test Page</Link>
-                        </li>
                         {keycloak.authenticated && (
-                            <li>
-                                <Link to="/profile">Profile</Link>
-                            </li>
+                            <>
+                                <li>
+                                    <Link to="/test">Test Page</Link>
+                                </li>
+                                <li>
+                                    <Link to="/profile">Profile</Link>
+                                </li>
+                            </>
+
                         )}
                     </ul>
 

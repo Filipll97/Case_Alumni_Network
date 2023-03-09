@@ -1,17 +1,41 @@
-// import axios from "."
-// import { stringify } from "querystring"
+import keycloak from '../keycloak';
 
-// /**
-//  * SAMPLE FUNCTION: Create a new user on the database
-//  * @param {any} user User to be added to API's database
-//  * @returns { Promise<{user: any, error: string | null}> } user
-//  */
+export const getUserInfo = async () => {
+    try {
+        // Refresh token if it is expired or will expire soon
+        if (keycloak.token && keycloak.isTokenExpired()) {
+            await keycloak.updateToken();
+        }
 
-// export const getOrCreateUserProfile = async (): Promise<Us> => {
-//     const userData = await axios.get('/api/Users')
-//         .catch(async (err) => {
-//             return (await axios.post(`/api/users`, {})).data
-//         }
-//         )
-//     return userData.data
+        const response = await fetch("https://localhost:7240/api/v1/Users", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + keycloak.token
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// export async function postUserInfo(data) {
+//     const response = await fetch('https://localhost:7240/api/v1/Users', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + keycloak.token
+//         },
+//         body: JSON.stringify(data)
+//     });
+
+//     if (!response.ok) {
+//         throw new Error(`HTTP error! status: ${response.status}`);
+//     }
+
+//     const responseData = await response.json();
+//     return responseData;
 // }
