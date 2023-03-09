@@ -1,21 +1,39 @@
 import keycloak from "../keycloak";
+import React, { useState, useEffect } from 'react';
+import { getUserInfo } from '../api/user';
 
-/**
- * Example Start Page using Keycloak Context.
- */
-function StartPage() {
+function DashBoardPage() {
+    const [user, setUser] = useState(null);
+
+    if (!keycloak.authenticated) {
+        keycloak.login()
+    }
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getUserInfo();
+            setUser(data);
+        };
+        if (keycloak.authenticated) {
+            fetchData();
+        }
+    }, []);
+
+
+    if (!user) {
+        return <div>Loading...</div>;
+    }
+
     return (
-        <div>
-            <h1>Start Page</h1>
 
-            <section className="actions">
-                {!keycloak.authenticated && (
-                    <button onClick={() => keycloak.login()}>Login</button>
-                )}
-                {keycloak.authenticated && (
-                    <button onClick={() => keycloak.logout()}>Logout</button>
-                )}
-            </section>
+        <div>
+            <div>
+                <h2>User Information</h2>
+                <p>Name: {user.username}</p>
+                <p>Bio: {user.bio}</p>
+                <p>Fun Fact: {user.funFact}</p>
+            </div>
+            <h1>Start Page</h1>
 
             {keycloak.token && (
                 <div>
@@ -26,4 +44,4 @@ function StartPage() {
         </div>
     );
 }
-export default StartPage;
+export default DashBoardPage;
