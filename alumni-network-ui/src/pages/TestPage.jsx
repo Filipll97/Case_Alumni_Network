@@ -7,7 +7,7 @@ function UserComponent() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('https://localhost:7240/api/Users', {
+                const response = await fetch('https://localhost:7240/api/v1/Users', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
