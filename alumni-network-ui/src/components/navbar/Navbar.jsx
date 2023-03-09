@@ -25,6 +25,7 @@ function Navbar() {
                         {keycloak.authenticated && (
                             <>
                                 <li>
+                                    <Link to="/post">New Post</Link>
                                 </li>
                                 <li>
                                     <Link to="/profile">Profile</Link>

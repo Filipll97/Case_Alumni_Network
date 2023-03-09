@@ -6,6 +6,7 @@ import Navbar from "./components/navbar/Navbar";
 import KeycloakRoute from "./routes/KeycloakRoute";
 import { ROLES } from "./const/roles";
 import { StrictMode } from "react";
+import PostPage from "./pages/PostPage";
 
 
 function App() {
@@ -21,6 +22,14 @@ function App() {
               element={
                 <KeycloakRoute role={ROLES.User}>
                   <ProfilePage />
+                </KeycloakRoute>
+              }
+            />
+            <Route
+              path="/post"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <PostPage />
                 </KeycloakRoute>
               }
             />
