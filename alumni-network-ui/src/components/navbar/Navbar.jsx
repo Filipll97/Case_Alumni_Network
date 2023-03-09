@@ -1,7 +1,18 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import keycloak from "../../keycloak";
+import { getUserFromLocalStorage } from "../../storage/userStorage";
 
 function Navbar() {
+
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+        const storedUser = getUserFromLocalStorage(); // Retrieve the user from local storage
+        if (storedUser) {
+            setUser(storedUser);
+        }
+    }, []);
 
     return (
         <nav>
@@ -14,7 +25,6 @@ function Navbar() {
                         {keycloak.authenticated && (
                             <>
                                 <li>
-                                    <Link to="/createEvent">Event Page</Link>
                                 </li>
                                 <li>
                                     <Link to="/profile">Profile</Link>
@@ -26,6 +36,9 @@ function Navbar() {
 
                     {keycloak.authenticated && (
                         <ul>
+                            <li>
+                                {user.username}
+                            </li>
                             <li>
                                 <button onClick={() => keycloak.logout()}>Logout</button>
                             </li>
