@@ -14,7 +14,7 @@ function Navbar() {
                         {keycloak.authenticated && (
                             <>
                                 <li>
-                                    <Link to="/test">Test Page</Link>
+                                    <Link to="/createEvent">Event Page</Link>
                                 </li>
                                 <li>
                                     <Link to="/profile">Profile</Link>

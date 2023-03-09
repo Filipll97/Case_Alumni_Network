@@ -11,9 +11,9 @@ const keycloak = new Keycloak("/keycloak.json");
 export const initialize = () => {
     const config = {
         checkLoginIframe: false,
-        onLoad: "check-sso",
+        //onLoad: "check-sso",
         silentCheckSsoRedirectUri:
-            window.location.origin + "/silent-check-sso.html",
+            window.location.origin, //+ "/silent-check-sso.html", Enable on deployment!
     };
     return keycloak.init(config);
 };
