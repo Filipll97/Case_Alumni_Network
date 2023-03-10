@@ -8,7 +8,6 @@ import { ROLES } from "./const/roles";
 import { StrictMode } from "react";
 import PostPage from "./pages/PostPage";
 
-
 function App() {
   return (
     <BrowserRouter>
