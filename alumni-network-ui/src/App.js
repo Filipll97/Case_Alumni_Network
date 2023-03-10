@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
       <StrictMode>
         <Navbar />
-        <main className="container">
+        <main>
           <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route
