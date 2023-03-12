@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import keycloak from "../../keycloak";
-import { getUserFromLocalStorage } from "../../storage/userStorage";
+import { getUserFromLocalStorage } from "../../utils/storage";
 
 function Navbar() {
 
@@ -11,8 +11,15 @@ function Navbar() {
         const storedUser = getUserFromLocalStorage(); // Retrieve the user from local storage
         if (storedUser) {
             setUser(storedUser);
+        } else if (keycloak.authenticated) {
+            keycloak.loadUserInfo().then(userInfo => {
+                setUser({
+                    username: userInfo.preferred_username,
+                });
+            });
         }
-    }, []);
+    }, [keycloak.authenticated]);
+
 
     return (
         <nav>
