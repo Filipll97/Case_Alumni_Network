@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import { initialize } from "./keycloak";
 import Loading from "./components/loading/Loading";
+import keycloak from './keycloak';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // Display a loading screen when connecting to Keycloak
@@ -12,10 +13,12 @@ root.render(<Loading message="Connecting to Alumni Network..." />)
 // Initialize Keycloak
 initialize()
   .then(() => { // If No Keycloak Error occurred - Display the App
+    if (!keycloak.authenticated) {
+      keycloak.login()
+    }
     root.render(
       <>
         <App />
-        <img id="background" src={`img/background-test.png`} alt={"sign"} key={`${Math.random()}`} />
       </>
     );
   })
