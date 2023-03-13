@@ -1,7 +1,7 @@
 import keycloak from "../keycloak";
 import React, { useState, useEffect } from 'react';
 import { getUserInfo } from '../api/user';
-import { saveUserToLocalStorage } from '../storage/userStorage';
+import { saveUserToLocalStorage } from '../utils/storage';
 
 function DashBoardPage() {
     const [user, setUser] = useState(null);

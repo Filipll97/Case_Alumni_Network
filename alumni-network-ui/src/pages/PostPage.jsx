@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getUserFromLocalStorage } from '../storage/userStorage';
+import { getUserFromLocalStorage } from '../utils/storage';
 
 function PostPage() {
 
