@@ -1,8 +1,16 @@
+import keycloak from "../keycloak";
+import CreateEventForm from "../components/event/CreateEventForm";
+
 function CreateEventPage() {
 
     return (
         <div>
-            <h1 className="text-3xl font-bold underline">Create Event</h1>
+            {keycloak.tokenParsed &&
+                <>
+                    <CreateEventForm/>
+                </>
+                
+            }
         </div>
     );
 }

@@ -13,7 +13,10 @@ root.render(<Loading message="Connecting to Alumni Network..." />)
 initialize()
   .then(() => { // If No Keycloak Error occurred - Display the App
     root.render(
-      <App />
+      <>
+        <App />
+        <img id="background" src={`img/background-test.png`} alt={"sign"} key={`${Math.random()}`} />
+      </>
     );
   })
   .catch(() => {

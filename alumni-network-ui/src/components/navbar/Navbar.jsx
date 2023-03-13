@@ -37,6 +37,9 @@ function Navbar() {
                                 <li>
                                     <Link to="/profile">Profile</Link>
                                 </li>
+                                <li>
+                                    <Link to="/createEvent">CreateEventPage</Link>
+                                </li>
                             </>
 
                         )}

@@ -8,13 +8,12 @@ import { ROLES } from "./const/roles";
 import { StrictMode } from "react";
 import PostPage from "./pages/PostPage";
 
-
 function App() {
   return (
     <BrowserRouter>
       <StrictMode>
         <Navbar />
-        <main className="container">
+        <main>
           <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route
