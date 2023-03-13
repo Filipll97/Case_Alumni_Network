@@ -6,10 +6,6 @@ import { saveUserToLocalStorage } from '../utils/storage';
 function DashBoardPage() {
     const [user, setUser] = useState(null);
 
-    if (!keycloak.authenticated) {
-        keycloak.login()
-    }
-
     useEffect(() => {
         const fetchData = async () => {
             const data = await getUserInfo();

@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import keycloak from "../../keycloak";
 import { getUserFromLocalStorage } from "../../utils/storage";
+import { removeItemFromLocalStorage } from "../../utils/storage"
 
 function Navbar() {
+
+    // SOLVE WITH REDUX OR CONTEXT!
 
     const [user, setUser] = useState({});
 
@@ -14,12 +17,19 @@ function Navbar() {
         } else if (keycloak.authenticated) {
             keycloak.loadUserInfo().then(userInfo => {
                 setUser({
-                    username: userInfo.preferred_username,
+                    username: userInfo.username,
                 });
             });
         }
     }, [keycloak.authenticated]);
 
+    const handleLogout = async () => {
+        removeItemFromLocalStorage("user");
+        keycloak.clearToken();
+        keycloak.logout();
+        localStorage.removeItem('kc_token');
+        localStorage.removeItem(`kc-callback-${keycloak.sub}`)
+    }
 
     return (
         <nav>
@@ -51,7 +61,7 @@ function Navbar() {
                                 {user.username}
                             </li>
                             <li>
-                                <button onClick={() => keycloak.logout()}>Logout</button>
+                                <button onClick={handleLogout}>Logout</button>
                             </li>
                         </ul>
                     )}
