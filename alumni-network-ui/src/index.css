@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 body {
-  background: #494949;
+  background: #181e2b;
+  color: white;
 }
 
 main {
@@ -27,7 +28,7 @@ pre {
 }
 
 nav {
-  background-color: #333333;
+  background-color: #242d39;
   color: white;
 }
 

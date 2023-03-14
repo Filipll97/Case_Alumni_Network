@@ -6,6 +6,7 @@ import { initialize } from "./keycloak";
 import Loading from "./components/loading/Loading";
 import keycloak from './keycloak';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 // Display a loading screen when connecting to Keycloak
 root.render(<Loading message="Connecting to Alumni Network..." />)
@@ -17,9 +18,7 @@ initialize()
       keycloak.login()
     }
     root.render(
-      <>
-        <App />
-      </>
+      <App />
     );
   })
   .catch(() => {

@@ -1,34 +1,22 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 import keycloak from "../../keycloak";
-import { getUserFromLocalStorage } from "../../utils/storage";
-import { removeItemFromLocalStorage } from "../../utils/storage"
+import { storageDelete } from "../../utils/storage"
+import { STORAGE_KEY_USER } from "../../utils/storageKeys"
 
 function Navbar() {
 
-    // SOLVE WITH REDUX OR CONTEXT!
+    const { user, setUser } = useUser()
 
-    const [user, setUser] = useState({});
-
-    useEffect(() => {
-        const storedUser = getUserFromLocalStorage(); // Retrieve the user from local storage
-        if (storedUser) {
-            setUser(storedUser);
-        } else if (keycloak.authenticated) {
-            keycloak.loadUserInfo().then(userInfo => {
-                setUser({
-                    username: userInfo.username,
-                });
-            });
-        }
-    }, [keycloak.authenticated]);
-
-    const handleLogout = async () => {
-        removeItemFromLocalStorage("user");
+    const handleLogout = () => {
+        storageDelete(STORAGE_KEY_USER)
+        setUser(null)
         keycloak.clearToken();
         keycloak.logout();
-        localStorage.removeItem('kc_token');
-        localStorage.removeItem(`kc-callback-${keycloak.sub}`)
+    }
+
+    if (!user) {
+        return <div>Loading...</div>;
     }
 
     return (
@@ -55,7 +43,7 @@ function Navbar() {
                         )}
                     </ul>
 
-                    {keycloak.authenticated && (
+                    {user && keycloak.authenticated && (
                         <ul>
                             <li>
                                 {user.username}
