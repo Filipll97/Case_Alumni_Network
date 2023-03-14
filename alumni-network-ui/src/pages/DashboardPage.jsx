@@ -1,27 +1,9 @@
 import keycloak from "../keycloak";
-import React, { useState, useEffect } from 'react';
-import { getUserInfo } from '../api/user';
-import { saveUserToLocalStorage } from '../utils/storage';
+import { useUser } from "../context/UserContext";
 
 function DashBoardPage() {
-    const [user, setUser] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getUserInfo();
-            setUser(data);
-            saveUserToLocalStorage(data); // Save the user to local storage
-        };
-        if (keycloak.authenticated) {
-            fetchData();
-        }
-    }, []);
-
-    // Store the user data in local storage
-    useEffect(() => {
-        localStorage.setItem('user', JSON.stringify(user));
-    }, [user]);
-
+    const { user, setUser } = useUser()
 
     if (!user) {
         return <div>Loading...</div>;

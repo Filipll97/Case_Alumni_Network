@@ -1,16 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { getUserFromLocalStorage } from '../utils/storage';
+import { useUser } from '../context/UserContext';
 
 function PostPage() {
 
-    const [user, setUser] = useState({});
-
-    useEffect(() => {
-        const storedUser = getUserFromLocalStorage(); // Retrieve the user from local storage
-        if (storedUser) {
-            setUser(storedUser);
-        }
-    }, []);
+    const [user, setUser] = useUser({});
 
     // const dataToSend = {};
     // const response = await postPostInfo(dataToSend);
