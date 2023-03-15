@@ -7,16 +7,11 @@ const validateKey = key => {
 export const storageSave = (key, value) => {
   validateKey(key);
 
-  console.log(value)
-
-
   if (!value) {
     throw new Error("storageSave: No value provided for " + key)
   }
 
   localStorage.setItem(key, JSON.stringify(value))
-
-  // localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(user));
 };
 
 export const storageRead = (key) => {

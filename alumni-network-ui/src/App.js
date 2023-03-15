@@ -19,7 +19,6 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUserInfo();
-      console.log(data)
       storageSave(STORAGE_KEY_USER, data)
       setUser(data)
     };
