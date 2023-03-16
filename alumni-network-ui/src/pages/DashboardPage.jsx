@@ -2,6 +2,8 @@ import keycloak from "../keycloak";
 import { useUser } from "../context/UserContext";
 import { getUserPosts } from "../api/post";
 import { useEffect, useState } from "react";
+import AddEventCalendar from "../components/EventCalendar/AddEvent";
+
 
 function DashBoardPage() {
 
@@ -48,31 +50,33 @@ function DashBoardPage() {
     if (!user) {
         return <div>Loading...</div>;
     }
-
     return (
         <div>
-            {/* {keycloak.token && (
+            {keycloak.token && (
                 <div>
                     <pre>{keycloak.token}</pre>
                 </div>
-            )} */}
-            <div className="flex flex-col items-center pt-12">
-                <p className="pb-8 text-2xl font-semibold">Dashboard</p>
-                {posts &&
-                    posts.map((post) => (
-                        <a href="#">
-                            <div key={post.id} className="item-container">
-                                <div>
-                                    <div className="bg-gray-800 rounded-lg p-24 border-slate-600 border-2 hover:border-slate-400">
-                                        <p className="text-lg font-semibold">{post.title}</p>
-                                        <p className="text-gray-400 pt-3 pb-2 text-sm">{post.body}</p>
-                                        <small className="block pt-2 text-gray-500">{formatLastUpdatedDate(post.lastUpdated)} by <a href="#"><span className="text-gray-500 hover:text-gray-300">{post.author.username}</span></a></small>
+            )}
+            <div className="flex flex-row p-2  items-center justify-center gap-9">
+                <div className="flex flex-col items-center pt-12">
+                    <p className="pb-8 text-2xl font-semibold">Dashboard</p>
+                    {posts &&
+                        posts.map((post) => (
+                            <a href="#">
+                                <div key={post.id} className="item-container m-2">
+                                    <div>
+                                        <div className="bg-gray-800 rounded-lg p-24 border-slate-600 border-2 hover:border-slate-400">
+                                            <p className="text-lg font-semibold">{post.title}</p>
+                                            <p className="text-gray-400 pt-3 pb-2 text-sm">{post.body}</p>
+                                            <small className="block pt-2 text-gray-500">{formatLastUpdatedDate(post.lastUpdated)} by <a href="#"><span className="text-gray-500 hover:text-gray-300">{post.author.username}</span></a></small>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
-                    ))
-                }
+                            </a>
+                        ))
+                    }
+                </div>
+                    <AddEventCalendar />
             </div>
         </div>
 
