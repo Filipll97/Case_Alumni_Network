@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { initialize } from "./keycloak";
-import Loading from "./components/loading/Loading";
+import Loading from "./components/Loading/Loading";
 import keycloak from './keycloak';
 
 

@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
-import CreateEventPage from "./pages/CreateEventPage";
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import KeycloakRoute from "./routes/KeycloakRoute";
 import { ROLES } from "./const/roles";
 import PostPage from "./pages/PostPage";
@@ -11,6 +10,8 @@ import { storageRead, storageSave } from "./utils/storage";
 import { getUserInfo } from "./api/user";
 import { useEffect, useState } from "react";
 import AppContext from './context/UserContext'
+import CalendarPage from "./pages/CalendarPage";
+import GroupPage from "./pages/GroupPage";
 
 function App() {
 
@@ -55,10 +56,18 @@ function App() {
               }
             />
             <Route
-              path="/createEvent"
+              path="/calendar"
               element={
                 <KeycloakRoute role={ROLES.User}>
-                  <CreateEventPage />
+                  <CalendarPage />
+                </KeycloakRoute>
+              }
+            />
+            <Route
+              path="/groups/:groupId"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <GroupPage />
                 </KeycloakRoute>
               }
             />
