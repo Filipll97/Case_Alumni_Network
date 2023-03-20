@@ -4,13 +4,16 @@ import { getUserPosts } from "../api/post";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getGroups } from "../api/group";
-import GroupList from "../components/group/GroupList";
+import { getTopics } from "../api/topic";
+import GroupList from "../components/Group/GroupList";
+import PostList from "../components/Post/PostList";
 
 function DashBoardPage() {
 
     const { user, setUser } = useUser()
     const [posts, setPosts] = useState();
     const [groups, setGroups] = useState();
+    const [topics, setTopics] = useState();
 
     if (keycloak.token && keycloak.isTokenExpired()) {
         keycloak.updateToken();
@@ -50,54 +53,31 @@ function DashBoardPage() {
         }
     }, [user]);
 
-    console.log(groups)
+    useEffect(() => {
+        if (user) {
+            const fetchData = async () => {
+                try {
+                    const topicData = await getTopics();
+                    if (topicData) {
+                        setTopics(topicData);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
 
-    function formatLastUpdatedDate(lastUpdatedDate) {
-        const currentDate = new Date();
-        const lastUpdated = new Date(lastUpdatedDate);
-        const diffInMs = currentDate - lastUpdated;
-        const diffInHours = Math.round(diffInMs / (1000 * 60 * 60));
-
-        if (diffInHours < 24) {
-            return `${diffInHours} hours ago`;
-        } else {
-            const diffInDays = Math.round(diffInHours / 24);
-            return `${diffInDays} days ago`;
+            };
+            fetchData()
         }
+    }, [user]);
+
+    function isMember(userId, topic) {
+        console.log("Jek")
+        return topic.users.some((u) => u.id === userId) ? "✔" : null;
     }
 
     if (!user) {
         return <div>Loading...</div>;
     }
-    return (
-        <div>
-            {keycloak.token && (
-                <div>
-                    <pre>{keycloak.token}</pre>
-                </div>
-            )}
-            <div className="flex flex-row p-2  items-center justify-center gap-9">
-                <div className="flex flex-col items-center pt-12">
-                    <p className="pb-8 text-2xl font-semibold">Dashboard</p>
-                    {posts &&
-                        posts.map((post) => (
-                            <a href="#">
-                                <div key={post.id} className="item-container m-2">
-                                    <div>
-                                        <div className="bg-gray-800 rounded-lg p-24 border-slate-600 border-2 hover:border-slate-400">
-                                            <p className="text-lg font-semibold">{post.title}</p>
-                                            <p className="text-gray-400 pt-3 pb-2 text-sm">{post.body}</p>
-                                            <small className="block pt-2 text-gray-500">{formatLastUpdatedDate(post.lastUpdated)} by <a href="#"><span className="text-gray-500 hover:text-gray-300">{post.author.username}</span></a></small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        ))
-                    }
-                </div>
-
-    const publicGroups = groups?.filter(group => !group.isPrivate);
-
     return (
         <div>
 
@@ -106,38 +86,38 @@ function DashBoardPage() {
                     <pre>{keycloak.token}</pre>
                 </div>
             )} */}
+
             <div className="grid grid-rows-3 grid-flow-col gap-4">
-                <div className="row-span-3 rounded-lg m-2 ml-12 mt-12">
-                    <div className="text-center">
-                        <p className="mb-2 mt-2 text-lg font-semibold text-gray-400">Popular Groups</p>
-                    </div>
-                    <GroupList groups={publicGroups} />
+
+                <div className="row-span-2 rounded-lg">
+                    <aside id="default-sidebar" className="fixed top-25 left-0 z-40 w-56 h-screen transition-transform -translate-x-full xl:translate-x-0" aria-label="Sidebar">
+                        <div className="h-full overflow-y-auto">
+                            <p className="font-semibold text-gray-400 mt-4 pl-4">Topics you might like...</p>
+                            <ul className="space-y-2">
+                                {topics &&
+                                    topics.map((topic) => (
+                                        <li>
+                                            <Link to="/group" key={topic.id} className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                <small className="flex flex-shrink justify-between">
+                                                    <span className="font-semibold">{topic.name}</span>
+                                                    <span className="text-blue-500 font-bold">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{isMember(user.id, topic)}</span>
+                                                </small>
+                                            </Link>
+                                        </li>
+
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                    </aside>
                 </div>
-                {/* <div className="col-span-2">03</div> */}
-                <div className="row-span-2 col-span-4 mr-16 mt-12">
-                    <div className="text-center">
-                        <p className="pb-4 text-lg font-semibold text-gray-400 mt-2">Posts</p>
-                    </div>
-                    {posts &&
-                        posts.map((post) => (
-                            <Link to="/posts" key={post.id}>
-                                <div key={post.id} className="item-container">
-                                    <div>
-                                        <div className="bg-gray-800 rounded-lg p-3 border-slate-600 border-2 hover:border-slate-400">
-                                            <p className="text-lg font-semibold">{post.title}</p>
-                                            <p className="text-gray-400 pt-3 pb-2 text-sm">{post.body}</p>
-                                            <div className="flex flex-shrink justify-between">
-                                                <small className="text-gray-500 ml-auto">{formatLastUpdatedDate(post.lastUpdated)} by<span className="text-gray-500 hover:text-gray-300">{post.author.username}</span></small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
-                        ))
-                    }
-                </div>
+
+
+                <PostList posts={posts} />
+                <GroupList groups={groups} />
+
             </div>
-        </div>
+        </div >
     );
 }
 export default DashBoardPage;
