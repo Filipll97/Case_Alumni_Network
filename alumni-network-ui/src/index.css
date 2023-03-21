@@ -4,7 +4,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 body {
-  background: #181e2b;
+  background: #282c34;
+  
   color: white;
   font-family: 'Roboto', sans-serif;
 }
@@ -29,33 +30,9 @@ pre {
   color: #fff;
 }
 
-nav {
-  color: white;
-}
-
 .card {
-  background: #5B5B5B;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-  max-width: 800px;
-}
-
-.card p {
-  color: #fff;
-  padding: 0.4rem 0;
-}
-
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.navbar ul {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
+  background: #2b313d;
+  
 }
 
 li {

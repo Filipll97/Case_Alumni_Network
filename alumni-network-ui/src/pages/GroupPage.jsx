@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getGroupById } from "../api/group";
 import PostList from "../components/Post/PostList";
 import { useUser } from "../context/UserContext";
@@ -17,7 +17,7 @@ function GroupPage() {
                 try {
                     const groupData = await getGroupById(groupId);
                     if (groupData) {
-                        setGroup(groupData[0]);
+                        setGroup(groupData);
                     }
                 } catch (error) {
                     console.log(error);
@@ -26,14 +26,14 @@ function GroupPage() {
             };
             fetchData()
         }
-    }, []);
+    }, [user]);
 
 
     const handleJoin = async (event) => {
         event.preventDefault();
 
         if (isMember() == "Join") {
-            console.log(user, group)
+            // joina groupen
         }
     }
 
@@ -47,8 +47,9 @@ function GroupPage() {
 
     return (
         <div className="grid grid-rows-3 grid-flow-col gap-4">
+
             <PostList posts={group.posts} />
-            <div className="row-span-2 rounded-lg m-2 mr-12 ml-12 mt-16 bg-gray-800">
+            <div className="row-span-2 rounded-lg m-2 mr-12 ml-12 mt-16 card">
                 <div className="text-center">
                     <p className="mb-2 mt-2 text-lg font-semibold text-gray-200">{group.name}</p>
                 </div>
@@ -57,6 +58,26 @@ function GroupPage() {
                     <button className="bg-blue-600 pl-4 pr-4 p-1 rounded mt-6 mb-6 text-sm hover:bg-blue-800">{isMember()}</button>
                 </form>
             </div>
+
+            <aside id="default-sidebar" className="fixed top-25 left-0 z-40 w-56 h-screen transition-transform -translate-x-full lg:translate-x-0" aria-label="Sidebar">
+                <div className="h-full overflow-y-auto">
+                    <p className="text-gray-400 mt-4 px-4 mb-2">Members</p>
+                    <ul className="space-y-2">
+                        {group.users &&
+                            group.users.map((member) => (
+                                <li key={member.id}>
+                                    <Link to="/group" className="flex items-center text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <small className="flex flex-shrink justify-between p-2 text-md">
+                                            <span>{member.username}</span>
+                                        </small>
+                                    </Link>
+                                </li>
+
+                            ))
+                        }
+                    </ul>
+                </div>
+            </aside>
         </div>
     );
 

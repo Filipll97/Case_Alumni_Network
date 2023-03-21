@@ -12,25 +12,34 @@ import { useEffect, useState } from "react";
 import AppContext from './context/UserContext'
 import CalendarPage from "./pages/CalendarPage";
 import GroupPage from "./pages/GroupPage";
+import PostThread from "./components/Post/PostThread";
+import Loading from "./components/Loading/Loading";
 
 function App() {
 
   const [user, setUser] = useState()
+   const [loading, setLoading] = useState(true); // Add this line
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUserInfo();
-      storageSave(STORAGE_KEY_USER, data)
-      setUser(data)
+      storageSave(STORAGE_KEY_USER, data);
+      setUser(data);
+      setLoading(false); // Set loading to false once user data has been fetched
     };
 
     const userData = storageRead(STORAGE_KEY_USER);
     if (userData) {
       setUser(userData);
+      setLoading(false); // Set loading to false if user data is already available in storage
     } else {
       fetchData();
     }
   }, []);
+
+  if (loading) {
+    return <Loading message="Loading..." />;
+  }
 
   return (
     <AppContext>
@@ -68,6 +77,14 @@ function App() {
               element={
                 <KeycloakRoute role={ROLES.User}>
                   <GroupPage />
+                </KeycloakRoute>
+              }
+            />
+              <Route
+              path="/posts/:postId"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <PostThread />
                 </KeycloakRoute>
               }
             />
