@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
 import KeycloakRoute from "./routes/KeycloakRoute";
 import { ROLES } from "./const/roles";
 import PostPage from "./pages/PostPage";
@@ -13,7 +13,7 @@ import AppContext from './context/UserContext'
 import CalendarPage from "./pages/CalendarPage";
 import GroupPage from "./pages/GroupPage";
 import PostThread from "./components/Post/PostThread";
-import Loading from "./components/Loading/Loading";
+import Loading from "./components/loading/Loading";
 
 function App() {
 
