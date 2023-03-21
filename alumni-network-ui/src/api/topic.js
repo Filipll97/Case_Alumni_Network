@@ -8,7 +8,7 @@ export const getTopics = async () => {
             await keycloak.updateToken();
         }
 
-        const response = await fetch("https://localhost:7240/api/v1/topic", {
+        const response = await fetch("https://localhost:7240/api/v1/Topics", {
             method: 'GET',
             headers: createHeaders()
         });

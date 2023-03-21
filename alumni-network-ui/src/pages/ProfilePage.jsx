@@ -1,5 +1,5 @@
 import keycloak from "../keycloak";
-import ProfileInfo from "../components/Profile/ProfileInfo";
+import ProfileInfo from "../components/profile/ProfileInfo";
 
 function ProfilePage() {
 
