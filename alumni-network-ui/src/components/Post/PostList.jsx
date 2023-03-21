@@ -59,14 +59,14 @@ function PostList({ posts }) {
             {posts &&
                 posts.map((post) => {
                     return (
-                        <div to={`/posts/${post.id}`} key={post.id}>
+                        <div key={post.id}>
                             <article className="p-6 rounded-lg card shadow-md hover:bg-gray-700 mb-4">
                                 <div className="flex justify-between items-center mb-2 text-gray-500">
-                                    <span>Placeholder text</span>
+                                    <span>*Fix Group Name*</span>
                                     {/* <span>{groupNames[post.groupId] || (fetchGroupName(post.groupId), "Loading...")}</span> */}
                                     <span className="text-sm">{formatLastUpdatedDate(post.lastUpdated)}</span>
                                 </div>
-                                <Link>
+                                <Link to={`/posts/${post.id}`}>
                                     <h2 className="mb-4 text-2xl font-medium tracking-tight text-gray-900 dark:text-white">{post.title} </h2>
                                 </Link>
                                 <p className="mb-6 font-light text-gray-500 dark:text-gray-400">{post.body}</p>

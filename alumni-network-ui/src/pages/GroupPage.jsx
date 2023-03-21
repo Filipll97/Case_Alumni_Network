@@ -72,7 +72,6 @@ function GroupPage() {
                                         </small>
                                     </Link>
                                 </li>
-
                             ))
                         }
                     </ul>
