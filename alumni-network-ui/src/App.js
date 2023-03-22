@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
-import Navbar from "./components/navbar/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import KeycloakRoute from "./routes/KeycloakRoute";
 import { ROLES } from "./const/roles";
 import PostPage from "./pages/PostPage";
@@ -19,7 +19,7 @@ import UserPage from "./pages/UserPage";
 function App() {
 
   const [user, setUser] = useState()
-   const [loading, setLoading] = useState(true); // Add this line
+  const [loading, setLoading] = useState(true); // Add this line
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,15 +81,15 @@ function App() {
                 </KeycloakRoute>
               }
             />
-              <Route
-              path="/posts/:postId"
+            <Route
+              path="/posts/user/:postId"
               element={
                 <KeycloakRoute role={ROLES.User}>
                   <PostThread />
                 </KeycloakRoute>
               }
             />
-                          <Route
+            <Route
               path="/user/:userId"
               element={
                 <KeycloakRoute role={ROLES.User}>

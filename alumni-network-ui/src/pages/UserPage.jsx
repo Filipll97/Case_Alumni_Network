@@ -29,20 +29,6 @@ function GroupPage() {
         }
     }, [user]);
 
-    function formatLastUpdatedDate(lastUpdatedDate) {
-        const currentDate = new Date();
-        const lastUpdated = new Date(lastUpdatedDate);
-        const diffInMs = currentDate - lastUpdated;
-        const diffInHours = Math.round(diffInMs / (1000 * 60 * 60));
-
-        if (diffInHours < 24) {
-            return `${diffInHours} hour(s) ago`;
-        } else {
-            const diffInDays = Math.round(diffInHours / 24);
-            return `${diffInDays} days ago`;
-        }
-    }
-
 
     if (!userPage) {
         return <div>Loading User...</div>;

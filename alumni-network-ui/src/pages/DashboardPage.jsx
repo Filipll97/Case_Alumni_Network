@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getGroups } from "../api/group";
 import { getTopics } from "../api/topic";
-import GroupList from "../components/group/GroupList";
+import GroupList from "../components/Group/GroupList";
 import PostList from "../components/Post/PostList";
 
 function DashBoardPage() {
@@ -73,16 +73,14 @@ function DashBoardPage() {
     if (!user) {
         return <div>Loading Dashboard...</div>;
     }
-
-
     return (
         <div>
 
-             {/*{keycloak.token && (
+            {/* {keycloak.token && (
                 <div>
                     <pre>{keycloak.token}</pre>
                 </div>
-                ) }*/} 
+            )} */}
 
             <div className="grid grid-rows-3 grid-flow-col gap-1">
 
