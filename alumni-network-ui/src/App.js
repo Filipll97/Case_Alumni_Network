@@ -13,7 +13,8 @@ import AppContext from './context/UserContext'
 import CalendarPage from "./pages/CalendarPage";
 import GroupPage from "./pages/GroupPage";
 import PostThread from "./components/Post/PostThread";
-import Loading from "./components/loading/Loading";
+import Loading from "./components/Loading/Loading";
+import UserPage from "./pages/UserPage";
 
 function App() {
 
@@ -85,6 +86,14 @@ function App() {
               element={
                 <KeycloakRoute role={ROLES.User}>
                   <PostThread />
+                </KeycloakRoute>
+              }
+            />
+                          <Route
+              path="/user/:userId"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <UserPage />
                 </KeycloakRoute>
               }
             />

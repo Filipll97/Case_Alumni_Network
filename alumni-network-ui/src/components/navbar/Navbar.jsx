@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import keycloak from "../../keycloak";
@@ -17,6 +17,21 @@ function Navbar() {
         keycloak.clearToken();
         keycloak.logout();
     }
+
+    const dropdownRef = useRef(null);
+
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setDropdownOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     if (!user) {
 
@@ -54,8 +69,8 @@ function Navbar() {
                     </svg>
                 </button>
                 <div
-                    className={`${navbar ? "block" : "hidden"
-                        } w-full md:block md:w-auto`}
+                    ref={dropdownRef}
+                    className={`${dropdownOpen ? "block" : "hidden"} w-full md:block md:w-auto`}
                     id="navbar-default"
                 >
                     <ul className="flex flex-col p-1 mt-4 rounded-lg md:flex-row md:space-x-8 md:mt-0 text-md md:text-sm items-center">

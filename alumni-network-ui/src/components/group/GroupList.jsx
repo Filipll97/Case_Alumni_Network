@@ -12,7 +12,7 @@ function GroupList({ groups }) {
     }
 
     return (
-        <div className="row-span-2 rounded-lg m-2 mr-12 mt-12 shadow-md">
+        <div className="row-span-2 rounded-lg m-2 mr-12 mt-12 shadow-md card">
             <p className="m-4 text-lg font-semibold text-gray-400 pb-4">Communities</p>
             {groups &&
                 groups.map((group) => (
