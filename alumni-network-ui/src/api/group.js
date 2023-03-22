@@ -3,16 +3,16 @@ import { createHeaders } from "./ApiIndex";
 
 
 export const getGroups = async () => {
-    try {
-        // Refresh token if it is expired or will expire soon
-        if (keycloak.token && keycloak.isTokenExpired()) {
-            await keycloak.updateToken();
-        }
+  try {
+    // Refresh token if it is expired or will expire soon
+    if (keycloak.token && keycloak.isTokenExpired()) {
+      await keycloak.updateToken();
+    }
 
-        const response = await fetch("https://localhost:7240/api/v1/Groups", {
-            method: 'GET',
-            headers: createHeaders()
-        });
+    const response = await fetch("https://localhost:7240/api/v1/Groups", {
+      method: 'GET',
+      headers: createHeaders()
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
@@ -30,16 +30,16 @@ export const getGroups = async () => {
 };
 
 export const getGroupById = async (groupId) => {
-    try {
-        // Refresh token if it is expired or will expire soon
-        if (keycloak.token && keycloak.isTokenExpired()) {
-            await keycloak.updateToken();
-        }
+  try {
+    // Refresh token if it is expired or will expire soon
+    if (keycloak.token && keycloak.isTokenExpired()) {
+      await keycloak.updateToken();
+    }
 
-        const response = await fetch(`https://localhost:7240/api/v1/Groups/${groupId}`, {
-            method: 'GET',
-            headers: createHeaders()
-        });
+    const response = await fetch(`https://localhost:7240/api/v1/groups/${groupId}`, {
+      method: 'GET',
+      headers: createHeaders()
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

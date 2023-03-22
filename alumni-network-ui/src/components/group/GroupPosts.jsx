@@ -1,14 +1,29 @@
-import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getGroupById } from "../../api/group";
+import { getGroupPosts } from "../../api/post";
 import { getUserById } from "../../api/user";
 
-function PostList({ posts }) {
 
+function GroupPosts({ group }) {
+
+    const [groupPosts, setGroupPosts] = useState();
     const [usernames, setUsernames] = useState({});
-    const [groupNames, setGroupNames] = useState({});
 
+    useEffect(() => {
+        console.log(group)
+        const fetchData = async () => {
+            try {
+                const groupData = await getGroupPosts(group.id);
+                if (groupData) {
+                    setGroupPosts(groupData);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+
+        };
+        fetchData()
+    }, []);
 
     function formatLastUpdatedDate(lastUpdatedDate) {
         const currentDate = new Date();
@@ -38,31 +53,19 @@ function PostList({ posts }) {
         }
     }
 
-    // async function fetchGroupName(groupId) {
-    //     const groupData = await getGroupById(groupId);
-    //     if (groupData && groupData) {
-    //         setGroupNames((prevState) => ({
-    //             ...prevState,
-    //             [groupId]: groupData.name,
-    //         }));
-    //     } else {
-    //         setGroupNames((prevState) => ({
-    //             ...prevState,
-    //             [groupId]: "Unknown Group",
-    //         }));
-    //     }
-    // }
+    if (!groupPosts) {
+        return <div>Loading Posts...</div>;
+    }
 
     return (
-        <div className="row-span-2 col-span-2 mr-12 ml-12 mt-24">
-            {posts &&
-                posts.map((post) => {
+        <div>
+            {groupPosts &&
+                groupPosts.map((post) => {
                     return (
                         <div key={post.id}>
                             <article className="p-6 rounded-lg card shadow-md hover:bg-gray-700 mb-4">
                                 <div className="flex justify-between items-center mb-2 text-gray-500">
-                                    <span>*Fix Group Name*</span>
-                                    {/* <span>{groupNames[post.groupId] || (fetchGroupName(post.groupId), "Loading...")}</span> */}
+                                    <span>{group.name}</span>
                                     <span className="text-sm">{formatLastUpdatedDate(post.lastUpdated)}</span>
                                 </div>
                                 <Link to={`/posts/user/${post.id}`}>
@@ -88,7 +91,9 @@ function PostList({ posts }) {
                         </div>
                     );
                 })}
+
         </div>
     );
 }
-export default PostList;
+
+export default GroupPosts

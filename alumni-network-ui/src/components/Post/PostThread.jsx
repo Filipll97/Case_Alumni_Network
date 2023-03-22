@@ -89,21 +89,21 @@ function PostThread() {
                     <span>
                         <span>{groupName || "Loading..."}</span>
                     </span>
-                    <span className="text-sm">{formatLastUpdatedDate(post.lastUpdated)}</span>
+                    <span className="text-sm">{formatLastUpdatedDate(post[0].lastUpdated)}</span>
                 </div>
-                <h2 className="mb-4 text-2xl font-medium tracking-tight text-gray-900 dark:text-white">{post.title} </h2>
-                <p className="mb-6 font-light text-gray-500 dark:text-gray-400">{post.body}</p>
+                <h2 className="mb-4 text-2xl font-medium tracking-tight text-gray-900 dark:text-white">{post[0].title} </h2>
+                <p className="mb-6 font-light text-gray-500 dark:text-gray-400">{post[0].body}</p>
                 <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-4">
-                        <img className="w-7 h-7 rounded-full text-xs" src={post.author.picture} alt="Profile Picture" />
+                        <img className="w-7 h-7 rounded-full text-xs" src={post[0].author.picture} alt="Profile Picture" />
                         <span className="font-medium dark:text-white">
-                            <Link to={`/user/${post.author.id}`} className="hover:underline hover:text-gray-50">
-                                {post.author.username}
+                            <Link to={`/user/${post[0].author.id}`} className="hover:underline hover:text-gray-50">
+                                {post[0].author.username}
                             </Link>
                         </span>
                     </div>
                     <span className="inline-flex items-center text-sm">
-                        {post.replies.length} comments
+                        {post[0].replies.length} comments
                     </span>
                 </div>
             </article>
@@ -126,8 +126,8 @@ function PostThread() {
                 </form>
             </div>
             <div className="mt-8">
-                {post.replies.length > 0 && <h3 className="text-lg font-semibold mb-4 text-white">Replies:</h3>}
-                {post.replies.map((reply) => (
+                {post[0].replies.length > 0 && <h3 className="text-lg font-semibold mb-4 text-white">Replies:</h3>}
+                {post[0].replies.map((reply) => (
                     <Reply key={reply.id} reply={reply} />
                 ))}
             </div>
