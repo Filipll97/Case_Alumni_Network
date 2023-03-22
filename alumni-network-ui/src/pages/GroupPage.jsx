@@ -59,7 +59,7 @@ function GroupPage() {
                             {group.users &&
                                 group.users.map((member) => (
                                     <li key={member.id}>
-                                        <Link to={`/user/${member.id}`} className="flex items-center text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <Link to={`/user/${member.id}`} className="flex items-center text-base font-normal rounded-lg text-white hover:bg-gray-700">
                                             <small className="flex flex-shrink justify-between p-2 text-md">
                                                 <span>{member.username}</span>
                                             </small>

@@ -5,6 +5,7 @@ import { getPostById } from "../../api/post";
 import { useUser } from "../../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Reply from "./Reply";
+import PostGroupName from "./PostGroupName";
 
 
 function PostThread() {
@@ -15,15 +16,6 @@ function PostThread() {
     const [groupName, setGroupName] = useState("");
 
 
-    async function fetchGroupName(groupId) {
-        const groupData = await getGroupById(groupId);
-        if (groupData && groupData) {
-            setGroupName(groupData.name);
-        } else {
-            setGroupName("Unknown Group");
-        }
-    }
-
     useEffect(() => {
         if (user) {
             const fetchData = async () => {
@@ -31,7 +23,6 @@ function PostThread() {
                     const postData = await getPostById(postId);
                     if (postData) {
                         setPost(postData);
-                        fetchGroupName(postData.groupId);
                     }
                 } catch (error) {
                     console.log(error);
@@ -71,10 +62,8 @@ function PostThread() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        // Save the comment using your API here
         console.log("Comment submitted:", comment);
 
-        // Clear the input field
         setComment("");
     }
 
@@ -86,9 +75,9 @@ function PostThread() {
         <div className="row-span-2 col-span-2 mr-12 ml-12 mt-24">
             <article className="p-6 rounded-lg card shadow-md hover:bg-gray-700 mb-4">
                 <div className="flex justify-between items-center mb-2 text-gray-500">
-                    <span>
-                        <span>{groupName || "Loading..."}</span>
-                    </span>
+                  
+                    {post[0].groupId &&  <PostGroupName groupId={post[0].groupId} />  }
+                
                     <span className="text-sm">{formatLastUpdatedDate(post[0].lastUpdated)}</span>
                 </div>
                 <h2 className="mb-4 text-2xl font-medium tracking-tight text-gray-900 dark:text-white">{post[0].title} </h2>
