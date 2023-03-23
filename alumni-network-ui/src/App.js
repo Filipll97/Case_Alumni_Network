@@ -15,6 +15,7 @@ import GroupPage from "./pages/GroupPage";
 import PostThread from "./components/Post/PostThread";
 import Loading from "./components/Loading/Loading";
 import UserPage from "./pages/UserPage";
+import NewPostPage from "./pages/NewPostPage";
 
 function App() {
 
@@ -94,6 +95,14 @@ function App() {
               element={
                 <KeycloakRoute role={ROLES.User}>
                   <UserPage />
+                </KeycloakRoute>
+              }
+            />
+            <Route
+              path="/newPost"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <NewPostPage />
                 </KeycloakRoute>
               }
             />

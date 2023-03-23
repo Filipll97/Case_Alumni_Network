@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getPostById, postReply } from "../../api/post";
+import { getPostById, createPost } from "../../api/post";
 import { useUser } from "../../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Reply from "./Reply";
@@ -72,7 +72,7 @@ function PostThread() {
         };
 
         try {
-            const response = await postReply(postData);
+            const response = await createPost(postData);
             console.log("Response: ", response)
             setUpdateComments(true); // trigger comments update
         } catch (error) {
