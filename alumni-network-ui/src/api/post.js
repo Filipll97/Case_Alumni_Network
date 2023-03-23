@@ -82,7 +82,7 @@ export const getGroupPosts = async (groupId) => {
 };
 
 
-export const postReply = async (postData) => {
+export const createPost = async (postData) => {
   try {
     console.log(postData)
     // Refresh token if it is expired or will expire soon

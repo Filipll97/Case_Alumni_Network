@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getGroupById, AddUserToGroup} from "../api/group";
+import { getGroupById, AddUserToGroup } from "../api/group";
 import GroupPosts from "../components/Group/GroupPosts";
 import { useUser } from "../context/UserContext";
 
@@ -22,28 +22,26 @@ function GroupPage() {
                     }
                     if (updateGroups) {
                         setUpdateGroups(false);
-                        }
+                    }
                 } catch (error) {
                     console.log(error);
                 }
 
             };
             fetchData()
-            
+
         }
     }, [user, updateGroups]);
 
 
     const handleJoin = async (event) => {
         event.preventDefault();
-        try 
-        {
+        try {
             const response = await AddUserToGroup(groupId);
             console.log(response)
             setUpdateGroups(true);
         }
-        catch(error) 
-        {
+        catch (error) {
             console.error(error);
         }
     }
