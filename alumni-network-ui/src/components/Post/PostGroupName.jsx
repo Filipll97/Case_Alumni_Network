@@ -19,8 +19,8 @@ function PostGroupName({ groupId }) {
 
   return (
     <div>
-      <span>{groupName || <i>Loading...</i>}</span>
+      <span>r/{groupName.toLowerCase() || <i>Loading...</i>}</span>
     </div>
   );
-} 
+}
 export default PostGroupName;

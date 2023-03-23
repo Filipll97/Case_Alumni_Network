@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getGroupById } from "../../api/group";
-import { getPostById } from "../../api/post";
+import { getPostById, postReply } from "../../api/post";
 import { useUser } from "../../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Reply from "./Reply";
@@ -59,11 +59,29 @@ function PostThread() {
         }
     }
 
+
     async function handleSubmit(event) {
         event.preventDefault();
 
-        console.log("Comment submitted:", comment);
+        const postData = {
+            title: post[0].title,
+            body: comment,
+            receiverId: post[0].author.id,
+            topicId: post[0].topicId,
+            groupId: post[0].groupId,
+            eventId: post[0].eventId,
+            parentId: user.id,
+        };
 
+        console.log(postData)
+
+        try {
+            const response = await postReply(postData);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+        console.log("Comment submitted:", comment);
         setComment("");
     }
 
@@ -75,9 +93,9 @@ function PostThread() {
         <div className="row-span-2 col-span-2 mr-12 ml-12 mt-24">
             <article className="p-6 rounded-lg card shadow-md hover:bg-gray-700 mb-4">
                 <div className="flex justify-between items-center mb-2 text-gray-500">
-                  
-                    {post[0].groupId &&  <PostGroupName groupId={post[0].groupId} />  }
-                
+
+                    {post[0].groupId && <PostGroupName groupId={post[0].groupId} />}
+
                     <span className="text-sm">{formatLastUpdatedDate(post[0].lastUpdated)}</span>
                 </div>
                 <h2 className="mb-4 text-2xl font-medium tracking-tight text-gray-900 dark:text-white">{post[0].title} </h2>
