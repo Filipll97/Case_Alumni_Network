@@ -35,7 +35,7 @@ export const getGroupById = async (groupId) => {
     if (keycloak.token && keycloak.isTokenExpired()) {
       await keycloak.updateToken();
     }
-
+    
     const response = await fetch(`https://localhost:7240/api/v1/groups/${groupId}`, {
       method: 'GET',
       headers: createHeaders()

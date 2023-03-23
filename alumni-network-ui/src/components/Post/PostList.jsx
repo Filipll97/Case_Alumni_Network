@@ -1,14 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getGroupById } from "../../api/group";
 import { getUserById } from "../../api/user";
+import PostGroupName from "./PostGroupName";
 
 function PostList({ posts }) {
 
     const [usernames, setUsernames] = useState({});
-    const [groupNames, setGroupNames] = useState({});
-
 
     function formatLastUpdatedDate(lastUpdatedDate) {
         const currentDate = new Date();
@@ -37,21 +35,7 @@ function PostList({ posts }) {
             console.log(error);
         }
     }
-
-    // async function fetchGroupName(groupId) {
-    //     const groupData = await getGroupById(groupId);
-    //     if (groupData && groupData) {
-    //         setGroupNames((prevState) => ({
-    //             ...prevState,
-    //             [groupId]: groupData.name,
-    //         }));
-    //     } else {
-    //         setGroupNames((prevState) => ({
-    //             ...prevState,
-    //             [groupId]: "Unknown Group",
-    //         }));
-    //     }
-    // }
+      
 
     return (
         <div className="row-span-2 col-span-2 mr-12 ml-12 mt-24">
@@ -61,8 +45,9 @@ function PostList({ posts }) {
                         <div key={post.id}>
                             <article className="p-6 rounded-lg card shadow-md hover:bg-gray-700 mb-4">
                                 <div className="flex justify-between items-center mb-2 text-gray-500">
-                                    <span>*Fix Group Name*</span>
-                                    {/* <span>{groupNames[post.groupId] || (fetchGroupName(post.groupId), "Loading...")}</span> */}
+                                    {post.groupId &&  <PostGroupName groupId={post.groupId} />  }
+                                    
+                                
                                     <span className="text-sm">{formatLastUpdatedDate(post.lastUpdated)}</span>
                                 </div>
                                 <Link to={`/posts/user/${post.id}`}>

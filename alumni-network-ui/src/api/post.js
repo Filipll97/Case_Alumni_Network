@@ -39,7 +39,6 @@ export const getUserPosts = async () => {
     if (!data || typeof data !== 'object') {
       throw new Error('Response data is empty or not in the expected format');
     }
-
     return data;
   } catch (error) {
     console.error(error);

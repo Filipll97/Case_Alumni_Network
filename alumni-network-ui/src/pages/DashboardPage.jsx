@@ -22,6 +22,7 @@ function DashBoardPage() {
                     const postData = await getUserPosts();
                     if (postData) {
                         setPosts(postData);
+                        console.log(postData);
                     }
                 } catch (error) {
                     console.log(error);
@@ -80,7 +81,7 @@ function DashBoardPage() {
                 <div>
                     <pre>{keycloak.token}</pre>
                 </div>
-            )} */}
+            )} */ }
 
             <div className="grid grid-rows-3 grid-flow-col gap-1">
 
@@ -92,7 +93,7 @@ function DashBoardPage() {
                                 {topics &&
                                     topics.map((topic) => (
                                         <li key={topic.id}>
-                                            <Link to="/group" className="flex items-center text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            <Link to="/group" className="flex items-center text-base font-normal rounded-lg text-white hover:bg-gray-700">
                                                 <small className="flex flex-shrink justify-between p-2 text-md">
                                                     <span>{topic.name}</span>
                                                     <span className="text-blue-500 font-bold">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{isMember(user.id, topic)}</span>

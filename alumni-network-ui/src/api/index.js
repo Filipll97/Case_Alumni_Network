@@ -35,7 +35,7 @@ axios.interceptors.request.use(async (config) => {
     try {
         await keycloak.updateToken(HOUR_IN_SECONDS);
     } catch (error) {
-        console.log("Could not refresh Keycloak Token:  Axios Interceptor");
+        console.log("Could not refresh Keycloak Token: Axios Interceptor");
     }
 
     // Return with updated token
