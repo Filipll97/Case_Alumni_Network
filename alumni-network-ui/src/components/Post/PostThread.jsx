@@ -13,7 +13,7 @@ function PostThread() {
     const { postId } = useParams();
     const [post, setPost] = useState();
     const [comment, setComment] = useState("");
-    const [groupName, setGroupName] = useState("");
+    const [newReply, setNewReply] = useState(null); // add new state variable
 
 
     useEffect(() => {
@@ -64,24 +64,18 @@ function PostThread() {
         event.preventDefault();
 
         const postData = {
-            title: post[0].title,
             body: comment,
-            receiverId: post[0].author.id,
-            topicId: post[0].topicId,
-            groupId: post[0].groupId,
-            eventId: post[0].eventId,
+            recieverId: post[0].author.id,
             parentId: user.id,
         };
 
-        console.log(postData)
-
         try {
             const response = await postReply(postData);
-            console.log(response);
+            setNewReply(response); // update state with new reply
         } catch (error) {
             console.error(error);
         }
-        console.log("Comment submitted:", comment);
+
         setComment("");
     }
 
@@ -89,8 +83,15 @@ function PostThread() {
         return <div>Loading Post...</div>;
     }
 
+    if (!post) {
+        return <div>Loading Post...</div>;
+    }
+
+    console.log(post[0])
+
     return (
         <div className="row-span-2 col-span-2 mr-12 ml-12 mt-24">
+
             <article className="p-6 rounded-lg card shadow-md hover:bg-gray-700 mb-4">
                 <div className="flex justify-between items-center mb-2 text-gray-500">
 
@@ -102,12 +103,16 @@ function PostThread() {
                 <p className="mb-6 font-light text-gray-500 dark:text-gray-400">{post[0].body}</p>
                 <div className="flex justify-between items-center">
                     <div className="flex items-center space-x-4">
-                        <img className="w-7 h-7 rounded-full text-xs" src={post[0].author.picture} alt="Profile Picture" />
-                        <span className="font-medium dark:text-white">
-                            <Link to={`/user/${post[0].author.id}`} className="hover:underline hover:text-gray-50">
-                                {post[0].author.username}
-                            </Link>
-                        </span>
+                        {post[0].author &&
+                            <>
+                                <img className="w-7 h-7 rounded-full text-xs" src={post[0].author.picture} alt="Profile Picture" />
+                                <span className="font-medium dark:text-white">
+                                    <Link to={`/user/${post[0].author.id}`} className="hover:underline hover:text-gray-50">
+                                        {post[0].author.username}
+                                    </Link>
+                                </span>
+                            </>
+                        }
                     </div>
                     <span className="inline-flex items-center text-sm">
                         {post[0].replies.length} comments
@@ -133,10 +138,19 @@ function PostThread() {
                 </form>
             </div>
             <div className="mt-8">
-                {post[0].replies.length > 0 && <h3 className="text-lg font-semibold mb-4 text-white">Replies:</h3>}
-                {post[0].replies.map((reply) => (
-                    <Reply key={reply.id} reply={reply} />
-                ))}
+                {post[0].author && (
+                    <>
+                        {/* existing replies */}
+                        <span>{post[0].author.recievedPosts}</span>
+                        {post[0].replies.length > 0 && (
+                            <h3 className="text-lg font-semibold mb-4 text-white">Replies:</h3>
+                        )}
+                        {newReply && <Reply reply={newReply} />} {/* render new reply */}
+                        {post[0].replies.map((reply) => (
+                            <Reply key={reply.id} reply={reply} />
+                        ))}
+                    </>
+                )}
             </div>
         </div >
     );

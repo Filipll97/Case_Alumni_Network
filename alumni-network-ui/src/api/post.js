@@ -84,14 +84,15 @@ export const getGroupPosts = async (groupId) => {
 
 export const postReply = async (postData) => {
   try {
+    console.log(postData)
     // Refresh token if it is expired or will expire soon
     if (keycloak.token && keycloak.isTokenExpired()) {
       await keycloak.updateToken();
     }
 
-    const response = await fetch(`https://localhost:7240/api/v1/Posts`, {
-      method: 'POST',
-      headers: (createHeaders),
+    const response = await fetch(`https://localhost:7240/api/v1/Posts/reply`, {
+      method: "POST",
+      headers: createHeaders(),
       body: JSON.stringify(postData)
     });
 

@@ -77,11 +77,11 @@ function DashBoardPage() {
     return (
         <div>
 
-            {keycloak.token && (
+            {/* {keycloak.token && (
                 <div>
                     <pre>{keycloak.token}</pre>
                 </div>
-            )}
+            )} */ console.log(keycloak.token)}
 
             <div className="grid grid-rows-3 grid-flow-col gap-1">
 
