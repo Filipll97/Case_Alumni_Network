@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getGroupById } from "../api/group";
+import { getGroupById, AddUserToGroup} from "../api/group";
 import GroupPosts from "../components/Group/GroupPosts";
 import { useUser } from "../context/UserContext";
 
@@ -10,6 +10,7 @@ function GroupPage() {
     const { user, setUser } = useUser()
     const { groupId } = useParams();
     const [group, setGroup] = useState();
+    const [updateGroups, setUpdateGroups] = useState(false);
 
     useEffect(() => {
         if (user) {
@@ -19,23 +20,34 @@ function GroupPage() {
                     if (groupData) {
                         setGroup(groupData[0]);
                     }
+                    if (updateGroups) {
+                        setUpdateGroups(false);
+                        }
                 } catch (error) {
                     console.log(error);
                 }
 
             };
             fetchData()
+            
         }
-    }, [user]);
+    }, [user, updateGroups]);
 
 
     const handleJoin = async (event) => {
         event.preventDefault();
-
-        if (isMember() == "Join") {
-            // joina groupen
+        try 
+        {
+            const response = await AddUserToGroup(groupId);
+            console.log(response)
+            setUpdateGroups(true);
+        }
+        catch(error) 
+        {
+            console.error(error);
         }
     }
+
 
     function isMember() {
         if (!group) {

@@ -86,10 +86,6 @@ function PostThread() {
         return <div>Loading Post...</div>;
     }
 
-    if (!post) {
-        return <div>Loading Post...</div>;
-    }
-
     console.log(post[0])
 
     return (
