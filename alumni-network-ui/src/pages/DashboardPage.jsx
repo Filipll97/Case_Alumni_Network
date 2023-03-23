@@ -9,7 +9,6 @@ import GroupList from "../components/Group/GroupList";
 import PostList from "../components/Post/PostList";
 
 function DashBoardPage() {
-
     const { user, setUser } = useUser()
     const [posts, setPosts] = useState();
     const [groups, setGroups] = useState();
@@ -22,7 +21,6 @@ function DashBoardPage() {
                     const postData = await getUserPosts();
                     if (postData) {
                         setPosts(postData);
-                        console.log(postData);
                     }
                 } catch (error) {
                     console.log(error);
@@ -84,7 +82,6 @@ function DashBoardPage() {
             )} */ console.log(keycloak.token)}
 
             <div className="grid grid-rows-3 grid-flow-col gap-1">
-
                 <div className="row-span-2 rounded-lg">
                     <aside id="default-sidebar" className="fixed top-25 left-0 z-40 w-56 h-screen transition-transform -translate-x-full lg:translate-x-0" aria-label="Sidebar">
                         <div className="h-full overflow-y-auto">

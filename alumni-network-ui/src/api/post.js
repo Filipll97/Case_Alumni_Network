@@ -90,7 +90,7 @@ export const postReply = async (postData) => {
       await keycloak.updateToken();
     }
 
-    const response = await fetch(`https://localhost:7240/api/v1/Posts/reply`, {
+    const response = await fetch(`https://localhost:7240/api/v1/Posts`, {
       method: "POST",
       headers: createHeaders(),
       body: JSON.stringify(postData)
