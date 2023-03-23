@@ -107,10 +107,16 @@ function Navbar() {
                                     {dropdownOpen && (
                                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-gray-700 ring-1 ring-black ring-opacity-5 dark:bg-gray-800 dark:text-gray-200">
                                             <Link
-                                                to="/profile"
+                                                to={`/user/${user.id}`}
                                                 className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
                                             >
                                                 Profile
+                                            </Link>
+                                            <Link
+                                                to="/profile"
+                                                className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                                            >
+                                                Edit Profile
                                             </Link>
                                             <button
                                                 onClick={handleLogout}

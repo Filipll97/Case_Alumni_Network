@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getGroupById } from "../../api/group";
 import { getPostById, postReply } from "../../api/post";
 import { useUser } from "../../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,7 +12,7 @@ function PostThread() {
     const { postId } = useParams();
     const [post, setPost] = useState();
     const [comment, setComment] = useState("");
-    const [newReply, setNewReply] = useState(null); // add new state variable
+    const [updateComments, setUpdateComments] = useState(false);
 
 
     useEffect(() => {
@@ -22,7 +21,11 @@ function PostThread() {
                 try {
                     const postData = await getPostById(postId);
                     if (postData) {
+                        console.log("Postdata: ", postData)
                         setPost(postData);
+                    }
+                    if (updateComments) {
+                        setUpdateComments(false);
                     }
                 } catch (error) {
                     console.log(error);
@@ -30,7 +33,7 @@ function PostThread() {
             };
             fetchData();
         }
-    }, [user, postId]);
+    }, [user, postId, updateComments]);
 
     function formatLastUpdatedDate(lastUpdatedDate) {
         const currentDate = new Date();
@@ -59,19 +62,19 @@ function PostThread() {
         }
     }
 
-
     async function handleSubmit(event) {
         event.preventDefault();
 
         const postData = {
             body: comment,
             recieverId: post[0].author.id,
-            parentId: user.id,
+            parentId: post[0].id,
         };
 
         try {
             const response = await postReply(postData);
-            setNewReply(response); // update state with new reply
+            console.log("Response: ", response)
+            setUpdateComments(true); // trigger comments update
         } catch (error) {
             console.error(error);
         }
@@ -138,17 +141,16 @@ function PostThread() {
                 </form>
             </div>
             <div className="mt-8">
-                {post[0].author && (
+                {post[0].author && post[0].replies.length > 0 && (
                     <>
-                        {/* existing replies */}
-                        <span>{post[0].author.recievedPosts}</span>
-                        {post[0].replies.length > 0 && (
-                            <h3 className="text-lg font-semibold mb-4 text-white">Replies:</h3>
-                        )}
-                        {newReply && <Reply reply={newReply} />} {/* render new reply */}
-                        {post[0].replies.map((reply) => (
-                            <Reply key={reply.id} reply={reply} />
-                        ))}
+                        {/* <span>{post[0].author.recievedPosts}</span> */}
+                        <h3 className="text-lg font-semibold mb-4 text-white">Replies:</h3>
+                        {/* render new reply */}
+                        {post[0].replies
+                            .sort((a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated))
+                            .map((reply) => (
+                                <Reply key={reply.id} reply={reply} />
+                            ))}
                     </>
                 )}
             </div>
