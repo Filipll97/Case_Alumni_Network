@@ -38,7 +38,7 @@ function PostList({ posts }) {
 
 
     return (
-        <div className="mr-12 ml-12 mt-12">
+        <div className="mr-12 ml-12">
             {posts &&
                 posts.map((post) => {
                     return (
