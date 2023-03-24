@@ -1,18 +1,24 @@
 import keycloak from "../keycloak";
 import { useUser } from "../context/UserContext";
 import { getUserPosts } from "../api/post";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { getGroups } from "../api/group";
 import { getTopics } from "../api/topic";
 import GroupList from "../components/Group/GroupList";
 import PostList from "../components/Post/PostList";
+import GroupsModal from "../components/Group/GroupsModal";
 
 function DashBoardPage() {
     const { user, setUser } = useUser()
     const [posts, setPosts] = useState();
     const [groups, setGroups] = useState();
     const [topics, setTopics] = useState();
+    const [showGroupsModal, setShowGroupsModal] = useState(false);
+
+    const toggleGroupsModal = () => {
+        setShowGroupsModal(!showGroupsModal);
+    };
 
     useEffect(() => {
         if (user) {
@@ -73,39 +79,47 @@ function DashBoardPage() {
         return <div>Loading Dashboard...</div>;
     }
     return (
-        <div>
-
-            {/* {keycloak.token && (
-                <div>
-                    <pre>{keycloak.token}</pre>
+        <div className="container mx-auto">
+            <div className="text-center">
+                <h1 className="text-3xl font-bold mb-6 mt-6">Dashboard</h1>
+            </div>
+            <div className="relative">
+                <button
+                    className="absolute bottom-0 right-0 bg-blue-700 text-white py-2 px-4 rounded focus:outline-none hover:bg-blue-700 lg:hidden"
+                    onClick={toggleGroupsModal}
+                >
+                    <div className="">Groups</div>
+                </button>
+                {showGroupsModal && (
+                    <GroupsModal groups={groups} onClose={toggleGroupsModal} />
+                )}
+            </div>
+            <div className="grid grid-cols-6 gap-4 lg:px-4">
+                <div className="col-span-1 lg:block hidden">
+                    <div className="h-full overflow-y-auto">
+                        <p className="text-gray-400 mt-4 mb-2">Popular Topics</p>
+                        <ul className="space-y-2">
+                            {topics &&
+                                topics.map((topic) => (
+                                    <li key={topic.id}>
+                                        <Link to="/group" className="flex items-center text-base font-normal rounded-lg text-white hover:bg-gray-700">
+                                            <small className="flex flex-shrink justify-between p-2 text-md">
+                                                <span>{topic.name}</span>
+                                                <span className="text-blue-500 font-bold">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{isMember(user.id, topic)}</span>
+                                            </small>
+                                        </Link>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
                 </div>
-            )} */ console.log(keycloak.token)}
-
-            <div className="grid grid-rows-3 grid-flow-col gap-1">
-                <div className="row-span-2 rounded-lg">
-                    <aside id="default-sidebar" className="fixed top-25 left-0 z-40 w-56 h-screen transition-transform -translate-x-full lg:translate-x-0" aria-label="Sidebar">
-                        <div className="h-full overflow-y-auto">
-                            <p className="text-gray-400 mt-4 px-4 mb-2">Popular Topics</p>
-                            <ul className="space-y-2">
-                                {topics &&
-                                    topics.map((topic) => (
-                                        <li key={topic.id}>
-                                            <Link to="/group" className="flex items-center text-base font-normal rounded-lg text-white hover:bg-gray-700">
-                                                <small className="flex flex-shrink justify-between p-2 text-md">
-                                                    <span>{topic.name}</span>
-                                                    <span className="text-blue-500 font-bold">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{isMember(user.id, topic)}</span>
-                                                </small>
-                                            </Link>
-                                        </li>
-
-                                    ))
-                                }
-                            </ul>
-                        </div>
-                    </aside>
+                <div className="lg:col-span-3 xl:col-span-3 lg:mx-0 col-span-6">
+                    <PostList posts={posts} />
                 </div>
-                <PostList posts={posts} />
-                <GroupList groups={groups} />
+                <div className="col-span-2 lg:block hidden">
+                    <GroupList groups={groups} />
+                </div>
             </div>
         </div >
     );
