@@ -16,24 +16,31 @@ import PostThread from "./components/Post/PostThread";
 import Loading from "./components/Loading/Loading";
 import UserPage from "./pages/UserPage";
 import NewPostPage from "./pages/NewPostPage";
+import NewGroupPage from "./pages/NewGroupPage";
+import { STORAGE_KEY_LAST_VISITED_PAGE } from "./utils/storageKeys";
 
 function App() {
 
   const [user, setUser] = useState()
-  const [loading, setLoading] = useState(true); // Add this line
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUserInfo();
       storageSave(STORAGE_KEY_USER, data);
       setUser(data);
-      setLoading(false); // Set loading to false once user data has been fetched
+      setLoading(false); 
+
+      const lastVisitedPage = storageRead(STORAGE_KEY_LAST_VISITED_PAGE);
+      if (lastVisitedPage) {
+        window.location.href = lastVisitedPage;
+      }
     };
 
     const userData = storageRead(STORAGE_KEY_USER);
     if (userData) {
       setUser(userData);
-      setLoading(false); // Set loading to false if user data is already available in storage
+      setLoading(false);
     } else {
       fetchData();
     }
@@ -103,6 +110,14 @@ function App() {
               element={
                 <KeycloakRoute role={ROLES.User}>
                   <NewPostPage />
+                </KeycloakRoute>
+              }
+            />
+          <Route
+              path="/newGroup"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <NewGroupPage />
                 </KeycloakRoute>
               }
             />

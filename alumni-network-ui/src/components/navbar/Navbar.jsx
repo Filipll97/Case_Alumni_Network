@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
 import keycloak from "../../keycloak";
-import { storageDelete } from "../../utils/storage"
-import { STORAGE_KEY_USER } from "../../utils/storageKeys"
+import { storageDelete, storageSave } from "../../utils/storage"
+import { STORAGE_KEY_LAST_VISITED_PAGE, STORAGE_KEY_USER } from "../../utils/storageKeys"
 
 function Navbar() {
 
@@ -14,6 +14,7 @@ function Navbar() {
     const handleLogout = () => {
         storageDelete(STORAGE_KEY_USER)
         setUser(null)
+        storageSave(STORAGE_KEY_LAST_VISITED_PAGE, "/");
         keycloak.clearToken();
         keycloak.logout();
     }

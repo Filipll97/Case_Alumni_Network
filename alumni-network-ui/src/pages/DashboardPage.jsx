@@ -93,7 +93,7 @@ function DashBoardPage() {
     return (
         <div className="container mx-auto">
             <div className="mt-6 flex flex-col">
-                {/* <p className=" my-4 text-center text-4xl font-extrabold">DashBoard</p> */}
+                { console.log(keycloak.token) }
                 <SearchBar onSearch={setSearchQuery} />
             </div>
             <div className="relative">

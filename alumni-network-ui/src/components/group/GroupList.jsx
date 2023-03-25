@@ -13,7 +13,17 @@ function GroupList({ groups }) {
 
     return (
         <div className="rounded-xl shadow-md card">
-            <p className="pt-2 px-2 text-lg font-semibold text-gray-400 ">Communities</p>
+            <div className="pt-4 px-4">
+                <div className="flex justify-between items-center p-0 m-0">
+                    <p className="font-semibold text-gray-400 text-lg ">Communities</p>
+                    <Link
+                        to="/newGroup"
+                        className="font-semibold block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
+                    >
+                        <button className="bg-blue-600 text-white rounded p-2 shadow-lg hover:bg-blue-700">New Group</button>
+                    </Link>
+                </div>
+            </div>
             {groups &&
                 groups.map((group) => (
                     <Link to={`/groups/${group.id}`} key={group.id}>
