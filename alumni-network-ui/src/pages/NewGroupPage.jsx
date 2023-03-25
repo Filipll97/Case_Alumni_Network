@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CreateGroup } from "../api/group";
 import { GetUserByName } from "../api/user";
 import { useUser } from "../context/UserContext";
@@ -34,12 +34,27 @@ function NewPostPage() {
         fetchData();
     }, [user]);
 
+    const [successMessage, setSuccessMessage] = useState("");
+    const formRef = useRef();
     async function handleNewGroup(group) {
         group.preventDefault();
         console.log(groupData)
         try {
             const response = await CreateGroup(groupData);
             console.log("Response: ", response);
+
+            formRef.current.reset();
+            setGroupData({
+                Name: "",
+                Description: "",
+                IsPrivate: false,
+                "users": [
+                    {
+                        "id": user.id
+                    }
+                ]
+            });
+            setSuccessMessage("Group successfully created!");
         } catch (error) {
             console.error(error);
         }
@@ -68,7 +83,8 @@ function NewPostPage() {
             ) : (
                 <>
                     <h3 className="pb-12 font-bold text-xl">New group</h3>
-                    <form onSubmit={handleNewGroup}>
+                    {successMessage && <p className="text-green-600 pb-4">{successMessage}</p>}
+                    <form ref={formRef} onSubmit={handleNewGroup}>
                         <div className="grid gap-6 mb-6 md:grid-cols-2">
                             <div>
                                 <label htmlFor="Name" className="block mb-2 font-bold text-gray-900 dark:text-white">Name</label>
