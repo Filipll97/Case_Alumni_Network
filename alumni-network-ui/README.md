@@ -31,26 +31,25 @@ Alumni Network is a frontend React application for managing and interacting with
 ## Installation
 
 1. Clone the repository:
-2. 
-git clone https://github.com/Filipll97/Case_Alumni_Network.git
+
+    git clone https://github.com/Filipll97/Case_Alumni_Network.git
 
 2. Change to the project directory:
-3. 
-cd .\alumni-network-ui\
+
+    cd .\alumni-network-ui\
 
 3. Install dependencies:
-4. 
-npm install
+
+    npm install
 
 4. Set up environment variables:
 
-Create a `.env` file in the root directory of the project and add the following variables:
-
-[TODO]: Add this part!
+    Create a `.env` file in the root directory of the project and add the following variables: 
+    [TODO]: Add this part!
 
 5. Start the development server:
 
-npm start
+    npm start
 
 The application should now be running on `http://localhost:3000`.
 
