@@ -2,13 +2,13 @@ import keycloak from "../keycloak";
 import { useUser } from "../context/UserContext";
 import { getUserPosts } from "../api/post";
 import React, { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
 import { getGroups } from "../api/group";
 import { getTopics } from "../api/topic";
 import GroupList from "../components/Group/GroupList";
 import PostList from "../components/Post/PostList";
 import GroupsModal from "../components/Group/GroupsModal";
 import SearchBar from "../components/Post/SearchBar";
+import TopicList from "../components/Topic/TopicList";
 
 function DashBoardPage() {
     const { user, setUser } = useUser()
@@ -18,6 +18,7 @@ function DashBoardPage() {
     const [showGroupsModal, setShowGroupsModal] = useState(false);
     const [filteredPosts, setFilteredPosts] = useState();
     const [searchQuery, setSearchQuery] = useState("");
+    const [activeTopics, setActiveTopics] = useState([]);
 
     const toggleGroupsModal = () => {
         setShowGroupsModal(!showGroupsModal);
@@ -76,16 +77,24 @@ function DashBoardPage() {
 
     useEffect(() => {
         if (posts) {
-            const searchResults = posts.filter((post) =>
-                post.title.toLowerCase().includes(searchQuery.toLowerCase())
-            );
+            const searchResults = posts
+                .filter((post) =>
+                    post.title.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .filter((post) =>
+                    activeTopics.length === 0 || activeTopics.includes(post.topicId)
+                );
             setFilteredPosts(searchResults);
         }
-    }, [searchQuery, posts]);
+    }, [searchQuery, posts, activeTopics]);
 
-    function isMember(userId, topic) {
-        return topic.users.some((u) => u.id === userId) ? "✔" : null;
-    }
+    const toggleTopic = (topicId) => {
+        if (activeTopics.includes(topicId)) {
+            setActiveTopics(activeTopics.filter((id) => id !== topicId));
+        } else {
+            setActiveTopics([...activeTopics, topicId]);
+        }
+    };
 
     if (!user) {
         return <div>Loading Dashboard...</div>;
@@ -93,7 +102,7 @@ function DashBoardPage() {
     return (
         <div className="container mx-auto">
             <div className="mt-6 flex flex-col">
-                { console.log(keycloak.token) }
+                {/* {console.log(keycloak.token)} */}
                 <SearchBar onSearch={setSearchQuery} />
             </div>
             <div className="relative">
@@ -109,24 +118,11 @@ function DashBoardPage() {
             </div>
             <div className="grid grid-cols-6 gap-4 lg:px-4">
                 <div className="col-span-1 lg:block hidden">
-                    <div className="card rounded-xl shadow-lg">
-                        <p className="pt-2 px-2 text-lg font-semibold text-gray-400 ">Popular Topics</p>
-                        <ul className="">
-                            {topics &&
-                                topics.map((topic) => (
-                                    <li key={topic.id}>
-                                        <Link to="/group" className="flex items-center shadow text-base font-normal rounded-lg text-white hover:bg-gray-700">
-                                            <div className="flex justify-between p-2 text-md">
-                                                <span>{topic.name}</span>
-                                                {isMember(user.id, topic) ? <span className="text-blue-500 font-bold">✔</span> : <span className="text-blue-500 font-bold">Add</span>}
-                                            </div>
-                                        </Link>
-                                    </li>
-
-                                ))
-                            }
-                        </ul>
-                    </div>
+                    <TopicList
+                        topics={topics}
+                        activeTopics={activeTopics}
+                        toggleTopic={toggleTopic}
+                    />
                 </div>
                 <div className="lg:col-span-3 xl:col-span-3 lg:mx-0 col-span-6">
                     <PostList posts={filteredPosts || posts} />

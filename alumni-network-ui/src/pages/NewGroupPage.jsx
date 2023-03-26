@@ -22,7 +22,6 @@ function NewPostPage() {
         const fetchData = async () => {
             try {
                 const response = await GetUserByName();
-                console.log(response)
                 if (response) {
                     setUsers(response);
                     setLoading(false);
@@ -38,7 +37,6 @@ function NewPostPage() {
     const formRef = useRef();
     async function handleNewGroup(group) {
         group.preventDefault();
-        console.log(groupData)
         try {
             const response = await CreateGroup(groupData);
             console.log("Response: ", response);
