@@ -67,7 +67,7 @@ function GroupPage() {
             <div className="grid grid-cols-6 gap-4 lg:px-4">
                 <div className="col-span-1 lg:block hidden">
                     <div className="h-full overflow-y-auto">
-                        <p className="text-gray-400 mt-4 mb-2">Members</p>
+                        <p className="text-gray-400 mt-12 mb-2">Members</p>
                         <ul className="space-y-2">
                             {group.users &&
                                 group.users.map((member) => (
@@ -84,7 +84,7 @@ function GroupPage() {
                 </div>
                 {/* Group information 1 */}
                 <div className="order-first lg:hidden lg:order-none col-span-6">
-                    <div className="lg:hidden text-center rounded-lg m-2 mr-12 ml-12 mt-16 card">
+                    <div className="lg:hidden text-center rounded-lg m-2 mr-12 ml-12 mt-16 card shadow">
                         <div className="text-center pt-2">
                             <p className="mt-2 font-medium">Description</p>
                         </div>
@@ -103,7 +103,7 @@ function GroupPage() {
                 </div>
                 {/* Group information 2 */}
                 <div className="col-span-2 lg:block hidden">
-                    <div className="rounded-lg m-2 mr-12 ml-12 mt-16 card">
+                    <div className="rounded-lg m-2 mr-12 ml-12 mt-16 card shadow-lg">
                         <div className="text-center pt-2">
                             <p className="mt-2 font-medium">Description</p>
                         </div>

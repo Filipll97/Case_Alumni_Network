@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Reply({ reply }) {
     return (
-        <div className="flex items-start space-x-4 my-4">
+        <div className="flex items-start space-x-4 my-4 p-4 border-b border-gray-700">
             <img className="w-7 h-7 rounded-full text-xs" src={reply.author.picture} alt="Profile Picture" />
             <div className="text-white">
                 <span className="font-medium dark:text-white">
@@ -11,7 +11,7 @@ function Reply({ reply }) {
                         {reply.author.username}
                     </Link>
                 </span>
-                <p>{reply.body}</p>
+                <p className="text-gray-300 text-sm pt-3 px-1">{reply.body}</p>
             </div>
         </div>
     );
