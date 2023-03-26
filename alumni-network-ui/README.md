@@ -1,44 +1,48 @@
 # Alumni Network
 
-Alumni Network is a frontend React application for managing and interacting with an alumni community. It uses Context API for state management and Keycloak for user authentication. The application provides features like login, user profiles, timeline, user dashboard, creating and editing posts, groups, topics, and events management.
+Alumni Network is a full-featured React application that facilitates interaction and management within an alumni community. The application leverages the Context API for state management and Keycloak for user authentication. The system provides a suite of features such as user profiles, timeline, user dashboard, creation and editing of posts, group and topic management, as well as event handling.
 
 ## Table of Contents
 
-1. [Features](#features)
+1. [Overview](#overview)
 2. [Requirements](#requirements)
 3. [Installation](#installation)
 4. [Usage](#usage)
 5. [License](#license)
 
-## Features
 
-- User Authentication with Keycloak
-- Context API for state management
-- Timeline of posts and events
-- User Profiles and Settings
-- User Dashboard
-- Group and Topic management
-- Creating and Editing Posts
-- Calendar view for events
-- Reusable components
+## Overview
+The Alumni Network application offers the following key functionalities:
+
+- Secure user authentication via Keycloak
+- Context API-based state management
+- Dynamic, searchable timeline for posts and events
+- Comprehensive user profiles and settings
+- Personalized user dashboard
+- Group and topic management
+- Creation and editing of posts
+- Calendar view for event tracking
+- Reusable components for modularity
 
 ## Requirements
+Before you begin, ensure your development environment meets the following requirements:
 
 - Node.js (>= 14.x.x)
 - npm (>= 6.x.x)
 - Keycloak server with client configuration
 
 ## Installation
+Follow these steps to set up and run the Alumni Network application locally:
 
 1. Clone the repository:
 
     git clone https://github.com/Filipll97/Case_Alumni_Network.git
 
-2. Change to the project directory:
+2. Navigate to the project directory:
 
     cd .\alumni-network-ui\
 
-3. Install dependencies:
+3. Install the required dependencies:
 
     npm install
 
