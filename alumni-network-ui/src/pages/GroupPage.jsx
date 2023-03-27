@@ -67,7 +67,7 @@ function GroupPage() {
             <div className="grid grid-cols-6 gap-4 lg:px-4">
                 <div className="col-span-1 lg:block hidden">
                     <div className="h-full overflow-y-auto">
-                        <p className="text-gray-400 mt-12 mb-2">Members</p>
+                        <p className="text-gray-400 mb-2">Members</p>
                         <ul className="space-y-2">
                             {group.users &&
                                 group.users.map((member) => (

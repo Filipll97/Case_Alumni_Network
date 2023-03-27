@@ -40,7 +40,7 @@ function Navbar() {
     }
 
     return (
-        <nav className="shadow px-2 sm:px-4 py-2.5 rounded">
+        <nav className="px-2 sm:px-4 py-2.5 rounded">
             <div className="container flex flex-wrap items-center justify-between mx-auto">
                 <Link
                     to="/"

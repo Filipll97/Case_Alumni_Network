@@ -57,7 +57,7 @@ function GroupPosts({ group }) {
     }
 
     return (
-        <div className="row-span-2 rounded-lg m-2 mr-12 mt-12 card">
+        <div className="row-span-2 rounded-lg m-2 mr-12 mt-12">
             {groupPosts &&
                 groupPosts.map((post) => {
                     return (
