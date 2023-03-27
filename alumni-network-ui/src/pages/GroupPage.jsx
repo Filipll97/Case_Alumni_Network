@@ -4,7 +4,8 @@ import { getGroupById, AddUserToGroup } from "../api/group";
 import GroupPosts from "../components/Group/GroupPosts";
 import { useUser } from "../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faCalendarAlt, faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { getEvents } from "../api/Event";
 
 
 function GroupPage() {
@@ -13,6 +14,8 @@ function GroupPage() {
     const { groupId } = useParams();
     const [group, setGroup] = useState();
     const [updateGroups, setUpdateGroups] = useState(false);
+    const [events, setEvents] = useState([]);
+
 
     useEffect(() => {
         if (user) {
@@ -34,6 +37,18 @@ function GroupPage() {
 
         }
     }, [user, updateGroups]);
+
+    useEffect(() => {
+        const fetchEvents = async () => {
+            const allEvents = await getEvents();
+            console.log(allEvents)
+            const groupEvents = allEvents.filter(event => event.groups[0].id === group.id);
+            setEvents(groupEvents);
+        };
+        if (group) {
+            fetchEvents();
+        }
+    }, [group]);
 
 
     const handleJoin = async (event) => {
@@ -58,6 +73,9 @@ function GroupPage() {
 
     if (!group) {
         return <div>Loading Group...</div>;
+    }
+    if (!events) {
+        return <div>Loading Events...</div>;
     }
 
 
@@ -106,8 +124,8 @@ function GroupPage() {
                     <GroupPosts group={group} />
                 </div>
                 {/* Group information 2 */}
-                <div className="col-span-2 lg:block hidden">
-                    <div className="rounded-lg m-2 mr-12 ml-12 mt-12 card shadow-lg">
+                <div className="col-span-2 lg:block text-center">
+                    <div className="rounded-lg m-2 mr-12 ml-12 card shadow-lg">
                         <div className="text-center pt-2">
                             <p className="mt-2 font-medium">Description</p>
                         </div>
@@ -121,6 +139,29 @@ function GroupPage() {
                                 </button>
                             </form>
                         )}
+                    </div>
+                    <div className="rounded-xl shadow-md card">
+                        <div className="pt-4 px-4">
+                            <div className="flex justify-between items-center p-0 m-0">
+                                <p className="font-semibold text-gray-400 text-lg mb-2">
+                                    <FontAwesomeIcon className="mr-2" icon={faCalendarAlt} />Upcoming Events
+                                </p>
+                            </div>
+                        </div>
+                        {events.map((event) => (
+                            <Link to={`/event/${event.id}`} key={event.id}>
+                                <div className="hover:bg-gray-700 p-3 px-2 border-b border-gray-700">
+                                    <p className="text-lg font-semibold ml-4">{event.name}</p>
+                                    <p className="text-gray-400 pt-3 pb-2 text-sm ml-4">
+                                        Starts at: {event.startTime}
+                                    </p>
+                                    <small className="flex flex-shrink justify-between pt-2 text-gray-500 ml-4">
+                                        <span className="font-semibold">Host: {event.acceptedUsers[0].username}</span>
+                                        <span>Attending: {event.acceptedUsers.length}</span>
+                                    </small>
+                                </div>
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>
