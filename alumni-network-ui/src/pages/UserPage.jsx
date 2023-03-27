@@ -36,8 +36,8 @@ function GroupPage() {
 
     return (
         <div className="container mx-auto">
-            <div className="text-center">
-                <h1 className="text-3xl font-bold mb-6 mt-6">{userPage.username}</h1>
+            <div className="text-center flex justify-center">
+                <h1 className="text-3xl font-bold mb-6 mt-6 w-1/2 card py-2 rounded-lg">{userPage.username}</h1>
             </div>
             <div className="grid grid-cols-6 gap-4 lg:px-4">
                 {/* Group information 1 */}
@@ -60,7 +60,7 @@ function GroupPage() {
                         </div>
                     </div>
                 </div>
-                <div className="lg:col-span-4 lg:mx-0 col-span-6">
+                <div className="lg:col-span-4 lg:mx-0 col-span-6 mt-12">
                     <PostList posts={userPage.authoredPosts} />
                 </div>
                 {/* Group information 2 */}

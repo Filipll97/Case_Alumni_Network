@@ -101,13 +101,13 @@ function DashBoardPage() {
     }
     return (
         <div className="container mx-auto">
-            <div className="mt-6 flex flex-col">
+            <div className="mt-6 lg:col-span-3 col-span-6 flex justify-center">
                 {console.log(keycloak.token)}
                 <SearchBar onSearch={setSearchQuery} />
             </div>
             <div className="relative">
                 <button
-                    className="absolute bottom-0 right-0 bg-blue-700 text-white py-2 px-4 rounded focus:outline-none hover:bg-blue-700 lg:hidden"
+                    className="absolute bottom-0 text-sm right-0 bg-blue-700 text-white py-1 px-2 rounded focus:outline-none hover:bg-blue-700 lg:hidden"
                     onClick={toggleGroupsModal}
                 >
                     <div className="">Groups</div>

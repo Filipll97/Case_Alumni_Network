@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getGroupPosts } from "../../api/post";
 import { getUserById } from "../../api/user";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComments } from "@fortawesome/free-solid-svg-icons";
 
 
 function GroupPosts({ group }) {
@@ -57,7 +59,7 @@ function GroupPosts({ group }) {
     }
 
     return (
-        <div className="row-span-2 rounded-lg m-2 mr-12 mt-12 card">
+        <div className="row-span-2 rounded-lg m-2 mr-12 mt-12">
             {groupPosts &&
                 groupPosts.map((post) => {
                     return (
@@ -82,7 +84,7 @@ function GroupPosts({ group }) {
                                     </div>
                                     {post.replies &&
                                         <span className="inline-flex items-center text-sm">
-                                            {post.replies.length} comments
+                                            {post.replies.length} <FontAwesomeIcon className="ml-1" icon={faComments} />
                                         </span>
                                     }
                                 </div>

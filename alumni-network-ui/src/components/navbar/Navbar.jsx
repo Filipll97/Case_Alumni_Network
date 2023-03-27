@@ -4,6 +4,8 @@ import { useUser } from "../../context/UserContext";
 import keycloak from "../../keycloak";
 import { storageDelete, storageSave } from "../../utils/storage"
 import { STORAGE_KEY_LAST_VISITED_PAGE, STORAGE_KEY_USER } from "../../utils/storageKeys"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faUser } from "@fortawesome/free-solid-svg-icons";
 
 function Navbar() {
 
@@ -40,7 +42,7 @@ function Navbar() {
     }
 
     return (
-        <nav className="shadow px-2 sm:px-4 py-2.5 rounded">
+        <nav className="px-2 sm:px-4 py-2.5 rounded">
             <div className="container flex flex-wrap items-center justify-between mx-auto">
                 <Link
                     to="/"
@@ -109,15 +111,15 @@ function Navbar() {
                                         <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 text-gray-700 ring-1 ring-black ring-opacity-5 dark:bg-gray-800 dark:text-gray-200">
                                             <Link
                                                 to={`/user/${user.id}`}
-                                                className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                className="px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex justify-between items-center"
                                             >
-                                                Profile
+                                                Profile <FontAwesomeIcon icon={faUser} />
                                             </Link>
                                             <Link
                                                 to="/profile"
-                                                className="block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700"
+                                                className="px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 flex justify-between items-center"
                                             >
-                                                Edit Profile
+                                                Edit Profile <FontAwesomeIcon icon={faPen} />
                                             </Link>
                                             <button
                                                 onClick={handleLogout}
