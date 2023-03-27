@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Alumni Network
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Alumni Network is a full-featured React application that facilitates interaction and management within an alumni community. The application leverages the Context API for state management and Keycloak for user authentication. The system provides a suite of features such as user profiles, timeline, user dashboard, creation and editing of posts, group and topic management, as well as event handling.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+1. [Overview](#overview)
+2. [Requirements](#requirements)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [License](#license)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Overview
+The Alumni Network application offers the following key functionalities:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Secure user authentication via Keycloak
+- Context API-based state management
+- Dynamic, searchable timeline for posts and events
+- Comprehensive user profiles and settings
+- Personalized user dashboard
+- Group and topic management
+- Creation and editing of posts
+- Calendar view for event tracking
+- Reusable components for modularity
 
-### `npm test`
+## Requirements
+Before you begin, ensure your development environment meets the following requirements:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js (>= 14.x.x)
+- npm (>= 6.x.x)
+- Keycloak server with client configuration
 
-### `npm run build`
+## Installation
+Follow these steps to set up and run the Alumni Network application locally:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    git clone https://github.com/Filipll97/Case_Alumni_Network.git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Navigate to the project directory:
 
-### `npm run eject`
+    cd .\alumni-network-ui\
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Install the required dependencies:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    npm install
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Set up environment variables:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    Create a `.env` file in the root directory of the project and add the following variables: 
+    [TODO]: Add this part!
 
-## Learn More
+5. Start the development server:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    npm start
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The application should now be running on `http://localhost:3000`.
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Visit `http://localhost:3000` in your browser.
+2. Log in with your Keycloak credentials.
+3. Explore the application features like timeline, user profiles, groups, topics, and events.
 
-### Analyzing the Bundle Size
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

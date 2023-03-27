@@ -10,7 +10,6 @@ function GroupPosts({ group }) {
     const [usernames, setUsernames] = useState({});
 
     useEffect(() => {
-        console.log(group)
         const fetchData = async () => {
             try {
                 const groupData = await getGroupPosts(group.id);

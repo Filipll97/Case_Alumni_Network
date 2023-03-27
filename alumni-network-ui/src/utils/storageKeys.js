@@ -1,1 +1,2 @@
 export const STORAGE_KEY_USER = "user";
+export const STORAGE_KEY_LAST_VISITED_PAGE = "STORAGE_KEY_LAST_VISITED_PAGE";

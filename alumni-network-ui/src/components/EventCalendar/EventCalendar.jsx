@@ -7,11 +7,10 @@ function EventCalendar({ events }) {
   const [calendarEvents, setCalendarEvents] = useState([]);
 
   useEffect(() => {
-    // Format the events data to be compatible with FullCalendar
     const formattedEvents = events.map((event) => ({
-      title: event.title,
-      start: event.start,
-      end: event.end,
+      title: event.name,
+      start: event.startTime,
+      end: event.endTime,
       allDay: true,
     }));
     setCalendarEvents(formattedEvents);
