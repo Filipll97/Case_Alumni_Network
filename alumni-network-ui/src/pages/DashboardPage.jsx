@@ -41,6 +41,7 @@ function DashBoardPage() {
         }
     }, [user]);
 
+
     useEffect(() => {
         if (user) {
             const fetchData = async () => {
@@ -116,7 +117,7 @@ function DashBoardPage() {
                     <GroupsModal groups={groups} onClose={toggleGroupsModal} />
                 )}
             </div>
-            <div className="grid grid-cols-6 gap-4 lg:px-4">
+            <div className="grid grid-cols-6 gap-2 lg:px-4">
                 <div className="col-span-1 lg:block hidden">
 
                     <TopicList

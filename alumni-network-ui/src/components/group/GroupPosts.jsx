@@ -59,7 +59,7 @@ function GroupPosts({ group }) {
     }
 
     return (
-        <div className="row-span-2 rounded-lg m-2 mr-12 mt-12">
+        <div className="row-span-2 rounded-lg">
             {groupPosts &&
                 groupPosts.map((post) => {
                     return (
