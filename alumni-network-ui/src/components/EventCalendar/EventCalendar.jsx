@@ -2,23 +2,27 @@ import React, { useState, useEffect } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { useNavigate } from 'react-router-dom';
 
 function EventCalendar({ events }) {
   const [calendarEvents, setCalendarEvents] = useState([]);
+  const navigate  = useNavigate();
 
   useEffect(() => {
     const formattedEvents = events.map((event) => ({
       title: event.name,
+      body: event.Description,
       start: event.startTime,
       end: event.endTime,
       allDay: true,
+      eventId: event.id,
     }));
     setCalendarEvents(formattedEvents);
   }, [events]);
 
   const handleEventClick = (info) => {
-    // Handle event click here
-    console.log(info.event);
+    const eventId = info.event.extendedProps.eventId;
+    navigate(`/event/${eventId}`);
   };
 
   return (
