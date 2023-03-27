@@ -118,6 +118,7 @@ function DashBoardPage() {
             </div>
             <div className="grid grid-cols-6 gap-4 lg:px-4">
                 <div className="col-span-1 lg:block hidden">
+
                     <TopicList
                         topics={topics}
                         activeTopics={activeTopics}

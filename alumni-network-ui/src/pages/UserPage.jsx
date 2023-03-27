@@ -43,26 +43,20 @@ function GroupPage() {
                 {/* Group information 1 */}
                 <div className="order-first lg:hidden lg:order-none col-span-6">
                     <div className="lg:hidden text-center rounded-lg m-2 mr-12 ml-12 mt-16 card">
-                        <div className="pt-2">
+                        <div className="pt-2 flex justify-center items-center">
                             <img
-                                src={user.picture}
+                                src={userPage.picture}
                                 className="h-10 w-10 rounded-full object-cover"
                                 alt=""
                             />
                         </div>
-                        <div className="pb-4">
-                            <div className="text-center">
-                                <p className="text-sm mt-6">Status</p>
-                            </div>
-                            <p className="text-sm mx-6 text-gray-400">{userPage.status}</p>
-                            <div className="text-center">
-                                <p className="text-sm mt-6">Fun Fact</p>
-                            </div>
-                            <p className="text-sm mx-6 text-gray-400">{userPage.funFact}</p>
-                            <div className="text-center">
-                                <p className="text-sm mt-6">Bio</p>
-                            </div>
-                            <p className="text-sm mx-6 text-gray-400">{userPage.bio}</p>
+                        <div className="pb-4 text-center">
+                            <p className="text-sm mt-6 mb-1 font-medium">Status</p>
+                            <p className="text-sm mx-12 text-gray-400">{userPage.status}</p>
+                            <p className="text-sm mt-6 mb-1 font-medium">Fun Fact</p>
+                            <p className="text-sm mx-12 text-gray-400">{userPage.funFact}</p>
+                            <p className="text-sm mt-6 mb-1 font-medium">Bio</p>
+                            <p className="text-sm mx-12 mb-3 text-gray-400">{userPage.bio}</p>
                         </div>
                     </div>
                 </div>
@@ -71,27 +65,21 @@ function GroupPage() {
                 </div>
                 {/* Group information 2 */}
                 <div className="col-span-2 lg:block hidden">
-                    <div className="rounded-lg m-2 mr-12 ml-12 mt-16 card">
-                        <div className="pt-2">
+                    <div className="rounded-lg m-2 mr-12 ml-12 mt-12 card shadow">
+                        <div className="pt-3 flex justify-center items-center">
                             <img
-                                src={user.picture}
-                                className="h-10 w-10 rounded-full object-cover"
+                                src={userPage.picture}
+                                className="h-20 w-20 border-4 rounded-full object-cover"
                                 alt=""
                             />
                         </div>
-                        <div className="pb-4">
-                            <div className="text-center">
-                                <p className="text-sm mt-6">Status</p>
-                            </div>
-                            <p className="text-sm mx-6 text-gray-400">{userPage.status}</p>
-                            <div className="text-center">
-                                <p className="text-sm mt-6">Fun Fact</p>
-                            </div>
-                            <p className="text-sm mx-6 text-gray-400">{userPage.funFact}</p>
-                            <div className="text-center">
-                                <p className="text-sm mt-6">Bio</p>
-                            </div>
-                            <p className="text-sm mx-6 text-gray-400">{userPage.bio}</p>
+                        <div className="pb-4 text-center">
+                            <p className="text-sm mt-6 mb-1 font-medium">Status</p>
+                            <p className="text-sm mx-12 text-gray-400">{userPage.status}</p>
+                            <p className="text-sm mt-6 mb-1 font-medium">Fun Fact</p>
+                            <p className="text-sm mx-12 text-gray-400">{userPage.funFact}</p>
+                            <p className="text-sm mt-6 mb-1 font-medium">Bio</p>
+                            <p className="text-sm mx-12 mb-3 text-gray-400">{userPage.bio}</p>
                         </div>
                     </div>
                 </div>
