@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getGroups } from "../api/group";
 import { createPost } from "../api/post";
 import { useUser } from "../context/UserContext";
@@ -9,9 +9,10 @@ function NewPostPage() {
     const [postData, setPostData] = useState({
         title: "",
         body: "",
-        parentId: user.id,
         groupId: 0,
     });
+    const [successMessage, setSuccessMessage] = useState("");
+    const formRef = useRef();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,6 +35,14 @@ function NewPostPage() {
         try {
             const response = await createPost(postData);
             console.log("Response: ", response);
+
+            formRef.current.reset();
+            setPostData({
+                title: "",
+                body: "",
+                groupId: 0,
+            });
+            setSuccessMessage("Post successfully created!");
         } catch (error) {
             console.error(error);
         }
@@ -47,7 +56,8 @@ function NewPostPage() {
     return (
         <div className="flex flex-col justify-center items-center pt-12 text-center">
             <h3 className="pb-12 font-bold text-xl">New Post</h3>
-            <form onSubmit={handleNewPost}>
+            {successMessage && <p className="text-green-600 pb-4">{successMessage}</p>}
+            <form ref={formRef} onSubmit={handleNewPost}>
                 <div className="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label htmlFor="title" className="block mb-2 font-bold text-gray-900 dark:text-white">Title</label>

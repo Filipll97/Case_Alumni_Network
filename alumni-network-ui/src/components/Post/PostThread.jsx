@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { getPostById, createPost } from "../../api/post";
 import { useUser } from "../../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import Reply from "./Reply";
 import PostGroupName from "./PostGroupName";
 
@@ -123,11 +124,11 @@ function PostThread() {
                             placeholder="Write your comment here..."
                         />
                         <button
-                            className="absolute right-2 bottom-6 text-white bg-blue-500 rounded-full w-8 h-8 flex items-center justify-center hover:bg-blue-700"
+                            className="absolute right-2 bottom-6 text-white rounded-full w-8 h-8 flex items-center justify-center hover:text-gray-400"
                             type="submit"
                             disabled={!comment.trim()}
                         >
-                            <FontAwesomeIcon icon="arrow-right" />
+                            <FontAwesomeIcon icon={faPaperPlane} />
                         </button>
                     </form>
                 </div>
