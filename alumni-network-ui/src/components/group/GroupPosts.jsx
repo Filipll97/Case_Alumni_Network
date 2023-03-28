@@ -39,7 +39,7 @@ function GroupPosts({ group }) {
             return `${diffInHours} hour(s) ago`;
         } else {
             const diffInDays = Math.round(diffInHours / 24);
-            return `${diffInDays} days ago`;
+            return `${diffInDays} day(s) ago`;
         }
     }
 

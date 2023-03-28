@@ -46,7 +46,7 @@ function Navbar() {
             <div className="container flex flex-wrap items-center justify-between mx-auto">
                 <Link
                     to="/"
-                    className="self-center text-xl font-semibold whitespace-nowrap text-white"
+                    className="self-center text-3xl tracking-wider font-semibold whitespace-nowrap text-white" id="titlePage"
                 >
                     Alumni Network
                 </Link>

@@ -137,7 +137,7 @@ function GroupPage() {
                         </ul>
                     </div>
                 </div>
-                {/* Group information 1
+                {/* Group information 1 */}
                 <div className="order-first md:hidden lg:order-none col-span-6">
                     <div className="lg:hidden text-center rounded-lg m-2 mr-12 ml-12 mt-12 card shadow">
                         <div className="text-center pt-2">
@@ -154,7 +154,7 @@ function GroupPage() {
                             </form>
                         )}
                     </div>
-                </div> */}
+                </div>
                 <div className="lg:col-span-3 xl:w-full lg:mx-0 col-span-4">
                     <GroupPosts group={group} />
                 </div>
@@ -175,7 +175,6 @@ function GroupPage() {
                             </form>
                         )}
                     </div>
-                    <Link to={`/events/group/${group.id}`} className="mb-5 card border border-gray-400 p-3 rounded-lg hover:bg-gray-700 text-sm">New Event <FontAwesomeIcon className="text-green-500" icon={faPlus} /></Link>
                     <div className="rounded-xl shadow-md card">
                         <div className="pt-4 px-4">
                             <div className="flex justify-between items-center p-0 m-0">
@@ -183,6 +182,7 @@ function GroupPage() {
                                     <FontAwesomeIcon className="mr-2" icon={faCalendarAlt} />
                                     Upcoming Events
                                 </p>
+                                <Link to={`/events/group/${group.id}`} className="mb-5 card border border-gray-400 p-2 rounded hover:bg-gray-700 text-sm">New <FontAwesomeIcon className="text-green-500" icon={faPlus} /></Link>
                             </div>
                         </div>
                         {hasUpcomingEvents ? (
