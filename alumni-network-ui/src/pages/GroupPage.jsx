@@ -4,7 +4,7 @@ import { getGroupById, AddUserToGroup } from "../api/group";
 import GroupPosts from "../components/Group/GroupPosts";
 import { useUser } from "../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faCalendarAlt, faUserPlus, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faCalendar, faCalendarAlt, faUserPlus, faUsers, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getEvents } from "../api/Event";
 
 
@@ -15,6 +15,41 @@ function GroupPage() {
     const [group, setGroup] = useState();
     const [updateGroups, setUpdateGroups] = useState(false);
     const [events, setEvents] = useState([]);
+
+    function formatStartTime(startTime) {
+        const eventTime = new Date(startTime);
+        const currentTime = new Date();
+        const timeDiff = eventTime - currentTime;
+
+        if (timeDiff <= 0) {
+            return { isFutureEvent: false };
+        }
+
+        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+
+        const formattedStartTime = eventTime.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        let timeUntilEvent;
+        if (days > 0) {
+            timeUntilEvent = `${days} day(s), ${hours} hour(s), ${minutes} minute(s) until the event`;
+        } else if (hours > 0) {
+            timeUntilEvent = `${hours} hour(s), ${minutes} minute(s) until the event`;
+        } else {
+            timeUntilEvent = `${minutes} minute(s) until the event`;
+        }
+
+        return { isFutureEvent: true, formattedStartTime, timeUntilEvent };
+    }
+
 
 
     useEffect(() => {
@@ -78,6 +113,7 @@ function GroupPage() {
         return <div>Loading Events...</div>;
     }
 
+    const hasUpcomingEvents = events.some((event) => formatStartTime(event.startTime).isFutureEvent);
 
     return (
         <div className="container mx-auto">
@@ -125,7 +161,7 @@ function GroupPage() {
                 </div>
                 {/* Group information 2 */}
                 <div className="col-span-2 lg:block text-center">
-                    <div className="rounded-lg m-2 mr-12 ml-12 card shadow-lg">
+                    <div className="rounded-lg m-2 card shadow-lg">
                         <div className="text-center pt-2">
                             <p className="mt-2 font-medium">Description</p>
                         </div>
@@ -140,28 +176,48 @@ function GroupPage() {
                             </form>
                         )}
                     </div>
+                    <Link to={`/events/group/${group.id}`} className="mb-5 card border border-gray-400 p-3 rounded-lg hover:bg-gray-700 text-sm">New Event <FontAwesomeIcon className="text-green-500" icon={faPlus} /></Link>
                     <div className="rounded-xl shadow-md card">
                         <div className="pt-4 px-4">
                             <div className="flex justify-between items-center p-0 m-0">
                                 <p className="font-semibold text-gray-400 text-lg mb-2">
-                                    <FontAwesomeIcon className="mr-2" icon={faCalendarAlt} />Upcoming Events
+                                    <FontAwesomeIcon className="mr-2" icon={faCalendarAlt} />
+                                    Upcoming Events
                                 </p>
                             </div>
                         </div>
-                        {events.map((event) => (
-                            <Link to={`/event/${event.id}`} key={event.id}>
-                                <div className="hover:bg-gray-700 p-3 px-2 border-b border-gray-700">
-                                    <p className="text-lg font-semibold ml-4">{event.name}</p>
-                                    <p className="text-gray-400 pt-3 pb-2 text-sm ml-4">
-                                        Starts at: {event.startTime}
-                                    </p>
-                                    <small className="flex flex-shrink justify-between pt-2 text-gray-500 ml-4">
-                                        <span className="font-semibold">Host: {event.acceptedUsers[0].username}</span>
-                                        <span>Attending: {event.acceptedUsers.length}</span>
-                                    </small>
-                                </div>
-                            </Link>
-                        ))}
+                        {hasUpcomingEvents ? (
+                            events.map((event) => {
+                                const { isFutureEvent, formattedStartTime, timeUntilEvent } = formatStartTime(
+                                    event.startTime
+                                );
+                                return isFutureEvent ? (
+                                    <Link to={`/event/${event.id}`} key={event.id}>
+                                        <div className="hover:bg-gray-700 p-3 px-2 border-b border-gray-700">
+                                            <p className="text-lg font-semibold ml-4">{event.name}</p>
+                                            <p className="text-gray-400 pt-3 pb-2 text-sm ml-4">
+                                                Starts at: {formattedStartTime}
+                                            </p>
+                                            <p className="text-gray-400 pt-3 pb-2 text-sm ml-4">
+                                                {timeUntilEvent}
+                                            </p>
+                                            {event.acceptedUsers && event.acceptedUsers[0] &&
+                                                <small className="flex flex-shrink justify-between pt-2 text-gray-500 ml-4">
+                                                    <span className="font-semibold">
+                                                        Host: {event.acceptedUsers[0].username}
+                                                    </span>
+                                                    <span>Attending: {event.acceptedUsers.length}</span>
+                                                </small>
+                                            }
+                                        </div>
+                                    </Link>
+                                ) : null;
+                            })
+                        ) : (
+                            <div className="text-gray-400 text-center py-4">
+                                No Upcoming Events
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

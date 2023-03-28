@@ -30,9 +30,12 @@ function GroupPosts({ group }) {
         const currentDate = new Date();
         const lastUpdated = new Date(lastUpdatedDate);
         const diffInMs = currentDate - lastUpdated;
+        const diffInMinutes = Math.round(diffInMs / (1000 * 60));
         const diffInHours = Math.round(diffInMs / (1000 * 60 * 60));
 
-        if (diffInHours < 24) {
+        if (diffInMinutes < 60) {
+            return `${diffInMinutes} minute(s) ago`;
+        } else if (diffInHours < 24) {
             return `${diffInHours} hour(s) ago`;
         } else {
             const diffInDays = Math.round(diffInHours / 24);

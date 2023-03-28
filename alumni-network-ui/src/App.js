@@ -18,18 +18,19 @@ import NewPostPage from "./pages/NewPostPage";
 import NewGroupPage from "./pages/NewGroupPage";
 import { STORAGE_KEY_LAST_VISITED_PAGE } from "./utils/storageKeys";
 import EventPage from "./pages/EventPage";
+import NewEventPage from "./pages/NewEventPage";
 
 function App() {
 
   const [user, setUser] = useState()
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getUserInfo();
       storageSave(STORAGE_KEY_USER, data);
       setUser(data);
-      setLoading(false); 
+      setLoading(false);
 
       const lastVisitedPage = storageRead(STORAGE_KEY_LAST_VISITED_PAGE);
       if (lastVisitedPage) {
@@ -105,7 +106,7 @@ function App() {
                 </KeycloakRoute>
               }
             />
-          <Route
+            <Route
               path="/newGroup"
               element={
                 <KeycloakRoute role={ROLES.User}>
@@ -118,6 +119,14 @@ function App() {
               element={
                 <KeycloakRoute role={ROLES.User}>
                   <EventPage />
+                </KeycloakRoute>
+              }
+            />
+            <Route
+              path="/events/group/:groupId"
+              element={
+                <KeycloakRoute role={ROLES.User}>
+                  <NewEventPage />
                 </KeycloakRoute>
               }
             />

@@ -29,6 +29,8 @@ function GroupPage() {
         }
     }, [user]);
 
+    console.log(user)
+
 
     if (!userPage) {
         return <div>Loading User...</div>;
