@@ -15,7 +15,7 @@ function SearchBar({ onSearch }) {
     };
 
     return (
-        <form onSubmit={handleSearch} className="lg:w-2/6 lg:mr-64 w-full mb-4 relative">
+        <form onSubmit={handleSearch} className="lg:w-full lg:mr-16 ml-4 w-full mb-4 relative">
             <input
                 type="text"
                 value={searchInput}

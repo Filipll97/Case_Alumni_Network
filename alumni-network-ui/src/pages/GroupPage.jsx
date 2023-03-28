@@ -6,6 +6,7 @@ import { useUser } from "../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar, faCalendarAlt, faUserPlus, faUsers, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getEvents } from "../api/Event";
+import EventCard from "../components/event/EventCard";
 
 
 function GroupPage() {
@@ -14,7 +15,7 @@ function GroupPage() {
     const { groupId } = useParams();
     const [group, setGroup] = useState();
     const [updateGroups, setUpdateGroups] = useState(false);
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState(null);
 
     function formatStartTime(startTime) {
         const eventTime = new Date(startTime);
@@ -77,7 +78,7 @@ function GroupPage() {
         const fetchEvents = async () => {
             const allEvents = await getEvents();
             console.log(allEvents)
-            const groupEvents = allEvents.filter(event => event.groups[0].id === group.id);
+            const groupEvents = allEvents.filter(event => event.groups.some(group => group.id === parseInt(groupId)));
             setEvents(groupEvents);
         };
         if (group) {
@@ -86,8 +87,8 @@ function GroupPage() {
     }, [group]);
 
 
-    const handleJoin = async (event) => {
-        event.preventDefault();
+    const handleJoinGroup = async (group) => {
+        group.preventDefault();
         try {
             const response = await AddUserToGroup(groupId);
             console.log(response)
@@ -103,12 +104,10 @@ function GroupPage() {
         if (!group) {
             return false;
         }
+        console.log(group.users.map((u) => console.log(u.id, user.id)))
         return group.users.some((u) => u.id === user.id);
     }
 
-    if (!group) {
-        return <div>Loading Group...</div>;
-    }
     if (!events) {
         return <div>Loading Events...</div>;
     }
@@ -117,10 +116,10 @@ function GroupPage() {
 
     return (
         <div className="container mx-auto">
-            <div className="justify-center flex text-center">
+            <div className="justify-center flex text-center lg:px-4">
                 <h1 className="text-3xl font-bold mb-6 mt-6 p-4 card w-1/2 rounded-lg">{group.name}</h1>
             </div>
-            <div className="grid grid-cols-6 gap-4 lg:px-4">
+            <div className="grid grid-cols-1 md:grid-cols-6 gap-4 lg:px-4">
                 <div className="col-span-1 lg:block hidden">
                     <div className="h-full overflow-y-auto">
                         <p className="text-gray-400 mb-2"><FontAwesomeIcon icon={faUsers} />&nbsp;&nbsp; Members</p>
@@ -138,8 +137,8 @@ function GroupPage() {
                         </ul>
                     </div>
                 </div>
-                {/* Group information 1 */}
-                <div className="order-first lg:hidden lg:order-none col-span-6">
+                {/* Group information 1
+                <div className="order-first md:hidden lg:order-none col-span-6">
                     <div className="lg:hidden text-center rounded-lg m-2 mr-12 ml-12 mt-12 card shadow">
                         <div className="text-center pt-2">
                             <p className="mt-2 font-medium">Description</p>
@@ -148,15 +147,15 @@ function GroupPage() {
                         {isMember() ? (
                             <div className="text-center mt-6 mb-6 pb-6 text-sm text-green-600">Joined ✔</div>
                         ) : (
-                            <form className="text-center" onSubmit={handleJoin}>
+                            <form className="text-center" onSubmit={handleJoinGroup}>
                                 <button className="bg-blue-600 pl-4 pr-4 p-1 rounded mt-6 mb-6 text-sm hover:bg-blue-800">
                                     Join <FontAwesomeIcon icon={faUserPlus} />
                                 </button>
                             </form>
                         )}
                     </div>
-                </div>
-                <div className="lg:col-span-3 xl:col-span-3 lg:mx-0 col-span-6">
+                </div> */}
+                <div className="lg:col-span-3 xl:w-full lg:mx-0 col-span-4">
                     <GroupPosts group={group} />
                 </div>
                 {/* Group information 2 */}
@@ -169,7 +168,7 @@ function GroupPage() {
                         {isMember() ? (
                             <div className="text-center mt-6 mb-6 pb-6 text-sm text-green-600">Joined ✔</div>
                         ) : (
-                            <form className="text-center" onSubmit={handleJoin}>
+                            <form className="text-center" onSubmit={handleJoinGroup}>
                                 <button className="bg-blue-600 pl-4 pr-4 p-1 rounded mt-6 mb-6 text-sm hover:bg-blue-800 font-medium">
                                     Join <FontAwesomeIcon className="ml-1" icon={faUserPlus} />
                                 </button>
@@ -218,6 +217,7 @@ function GroupPage() {
                                 No Upcoming Events
                             </div>
                         )}
+
                     </div>
                 </div>
             </div>
