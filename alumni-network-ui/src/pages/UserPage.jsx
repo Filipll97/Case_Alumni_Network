@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { getUserById } from "../api/user";
 import PostList from "../components/Post/PostList";
 import { useUser } from "../context/UserContext";
+import updateTokenAndExecute from "../utils/keycloakUtils";
 
 
 function GroupPage() {
@@ -15,11 +16,12 @@ function GroupPage() {
         if (user) {
             const fetchData = async () => {
                 try {
-                    console.log(userId)
-                    const groupData = await getUserById(userId);
-                    if (groupData) {
-                        setUserPage(groupData);
-                    }
+                    await updateTokenAndExecute(async () => {
+                        const groupData = await getUserById(userId);
+                        if (groupData) {
+                            setUserPage(groupData);
+                        }
+                    })
                 } catch (error) {
                     console.log(error);
                 }

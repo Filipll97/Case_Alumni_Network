@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getEvents } from "../api/Event";
-import EventPosts from "../components/event/EventPosts";
+import EventPosts from "../components/Event/EventPosts";
 import { useUser } from "../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import EventCard from "../components/event/EventCard";
+import updateTokenAndExecute from "../utils/keycloakUtils";
 
 import {
-    faCalendar,
     faCalendarAlt,
-    faUserPlus,
     faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -20,12 +18,18 @@ function EventPage() {
 
     useEffect(() => {
         const fetchEvents = async () => {
-            const allEvents = await getEvents();
-            console.log(allEvents)
-            const eventWithRightId = allEvents.find(
-                (e) => e.id == parseInt(eventId)
-            );
-            setEvent(eventWithRightId);
+            await updateTokenAndExecute(async () => {
+                try {
+                    const allEvents = await getEvents();
+                    console.log(allEvents);
+                    const eventWithRightId = allEvents.find(
+                        (e) => e.id == parseInt(eventId)
+                    );
+                    setEvent(eventWithRightId);
+                } catch (error) {
+                    console.log(error);
+                }
+            });
         };
         if (!event) {
             fetchEvents();

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { AddEvent, CreateGroupEventInvitation } from "../api/Event";
 import { useUser } from "../context/UserContext";
+import updateTokenAndExecute from "../utils/keycloakUtils";
 
 function NewEventPage() {
     const { groupId } = useParams();
@@ -22,18 +23,20 @@ function NewEventPage() {
     async function handleNewEvent(event) {
         event.preventDefault();
         try {
-            const response = await AddEvent(eventData);
-            await CreateGroupEventInvitation(response.id, parseInt(groupId));
-            formRef.current.reset();
-            setEventData({
-                name: "",
-                description: "",
-                allowGuests: true,
-                bannerImage: "",
-                startTime: "",
-                endTime: "",
-                groupId: parseInt(groupId),
-            });
+            await updateTokenAndExecute(async () => {
+                const response = await AddEvent(eventData);
+                await CreateGroupEventInvitation(response.id, parseInt(groupId));
+                formRef.current.reset();
+                setEventData({
+                    name: "",
+                    description: "",
+                    allowGuests: true,
+                    bannerImage: "",
+                    startTime: "",
+                    endTime: "",
+                    groupId: parseInt(groupId),
+                });
+            })
             setSuccessMessage("Event successfully created!");
         } catch (error) {
             console.error(error);

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { CreateGroup } from "../api/group";
 import { GetUserByName } from "../api/user";
 import { useUser } from "../context/UserContext";
+import updateTokenAndExecute from "../utils/keycloakUtils";
 
 function NewPostPage() {
     const { user, setUser } = useUser();
@@ -21,11 +22,13 @@ function NewPostPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await GetUserByName();
-                if (response) {
-                    setUsers(response);
-                    setLoading(false);
-                }
+                await updateTokenAndExecute(async () => {
+                    const response = await GetUserByName();
+                    if (response) {
+                        setUsers(response);
+                        setLoading(false);
+                    }
+                })
             } catch (error) {
                 console.error(error);
             }
@@ -38,20 +41,22 @@ function NewPostPage() {
     async function handleNewGroup(group) {
         group.preventDefault();
         try {
-            const response = await CreateGroup(groupData);
-            console.log("Response: ", response);
+            await updateTokenAndExecute(async () => {
+                const response = await CreateGroup(groupData);
+                console.log("Response: ", response);
 
-            formRef.current.reset();
-            setGroupData({
-                Name: "",
-                Description: "",
-                IsPrivate: false,
-                "users": [
-                    {
-                        "id": user.id
-                    }
-                ]
-            });
+                formRef.current.reset();
+                setGroupData({
+                    Name: "",
+                    Description: "",
+                    IsPrivate: false,
+                    "users": [
+                        {
+                            "id": user.id
+                        }
+                    ]
+                });
+            })
             setSuccessMessage("Group successfully created!");
         } catch (error) {
             console.error(error);

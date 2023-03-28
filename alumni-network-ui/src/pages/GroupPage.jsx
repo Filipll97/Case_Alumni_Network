@@ -4,9 +4,9 @@ import { getGroupById, AddUserToGroup } from "../api/group";
 import GroupPosts from "../components/Group/GroupPosts";
 import { useUser } from "../context/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendar, faCalendarAlt, faUserPlus, faUsers, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faUserPlus, faUsers, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { getEvents } from "../api/Event";
-import EventCard from "../components/event/EventCard";
+import updateTokenAndExecute from "../utils/keycloakUtils";
 
 
 function GroupPage() {
@@ -51,35 +51,35 @@ function GroupPage() {
         return { isFutureEvent: true, formattedStartTime, timeUntilEvent };
     }
 
-
-
     useEffect(() => {
         if (user) {
             const fetchData = async () => {
                 try {
-                    const groupData = await getGroupById(groupId);
-                    if (groupData) {
-                        setGroup(groupData[0]);
-                    }
-                    if (updateGroups) {
-                        setUpdateGroups(false);
-                    }
+                    await updateTokenAndExecute(async () => {
+                        const groupData = await getGroupById(groupId);
+                        if (groupData) {
+                            setGroup(groupData[0]);
+                        }
+                        if (updateGroups) {
+                            setUpdateGroups(false);
+                        }
+                    });
                 } catch (error) {
                     console.log(error);
                 }
-
             };
-            fetchData()
-
+            fetchData();
         }
     }, [user, updateGroups]);
 
     useEffect(() => {
         const fetchEvents = async () => {
-            const allEvents = await getEvents();
-            console.log(allEvents)
-            const groupEvents = allEvents.filter(event => event.groups.some(group => group.id === parseInt(groupId)));
-            setEvents(groupEvents);
+            await updateTokenAndExecute(async () => {
+                const allEvents = await getEvents();
+                console.log(allEvents)
+                const groupEvents = allEvents.filter(event => event.groups.some(group => group.id === parseInt(groupId)));
+                setEvents(groupEvents);
+            })
         };
         if (group) {
             fetchEvents();
@@ -137,7 +137,7 @@ function GroupPage() {
                         </ul>
                     </div>
                 </div>
-                {/* Group information 1 */}
+                {/* Group information 1
                 <div className="order-first md:hidden lg:order-none col-span-6">
                     <div className="lg:hidden text-center rounded-lg m-2 mr-12 ml-12 mt-12 card shadow">
                         <div className="text-center pt-2">
@@ -154,7 +154,7 @@ function GroupPage() {
                             </form>
                         )}
                     </div>
-                </div>
+                </div> */}
                 <div className="lg:col-span-3 xl:w-full lg:mx-0 col-span-4">
                     <GroupPosts group={group} />
                 </div>
@@ -182,7 +182,7 @@ function GroupPage() {
                                     <FontAwesomeIcon className="mr-2" icon={faCalendarAlt} />
                                     Upcoming Events
                                 </p>
-                                <Link to={`/events/group/${group.id}`} className="mb-5 card border border-gray-400 p-2 rounded hover:bg-gray-700 text-sm">New <FontAwesomeIcon className="text-green-500" icon={faPlus} /></Link>
+                                <Link to={`/events/group/${group.id}`} className="mb-5 card border border-gray-400 p-2 rounded-lg hover:bg-gray-700 text-sm">New <FontAwesomeIcon className="text-green-500" icon={faPlus} /></Link>
                             </div>
                         </div>
                         {hasUpcomingEvents ? (
