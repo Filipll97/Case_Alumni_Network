@@ -17,41 +17,25 @@ function EventPage() {
     const { user, setUser } = useUser();
     const { eventId } = useParams();
     const [event, setEvent] = useState();
-    const [updateEvents, setUpdateEvents] = useState(false);
-    const [events, setEvents] = useState(null);
 
     useEffect(() => {
         const fetchEvents = async () => {
             const allEvents = await getEvents();
-            const relatedEvents = allEvents.filter(
-                (e) => e.id !== parseInt(eventId)
+            console.log(allEvents)
+            const eventWithRightId = allEvents.find(
+                (e) => e.id == parseInt(eventId)
             );
-            setEvents(relatedEvents);
+            setEvent(eventWithRightId);
         };
-        if (event) {
+        if (!event) {
             fetchEvents();
         }
     }, [event]);
 
-    useEffect(() => {
-        console.log(event);
-        if (user) {
-            const fetchData = async () => {
-                try {
-                    const eventData = await getEvents();
-                    if (eventData) {
-                        setEvent(eventData[eventId - 1]);
-                    }
-                    if (updateEvents) {
-                        setUpdateEvents(false);
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-            };
-            fetchData();
-        }
-    }, [user, updateEvents]);
+
+    if (!event) {
+        return <div>Loading Events...</div>;
+    }
 
     return (
         <div className="container mx-auto">
@@ -70,7 +54,7 @@ function EventPage() {
                                     &nbsp;&nbsp; Going
                                 </p>
                                 <ul className="">
-                                    {event.acceptedUsers &&
+                                    {event.acceptedUsers && event.acceptedUsers[0] &&
                                         event.acceptedUsers.map((member) => (
                                             <li key={member.id}>
                                                 <Link
@@ -84,6 +68,7 @@ function EventPage() {
                                                     </small>
                                                 </Link>
                                             </li>
+
                                         ))}
                                 </ul>
                             </div>
@@ -106,22 +91,23 @@ function EventPage() {
                                         {event.name}
                                     </p>
                                 </div>
-                                {event &&
-                                        <Link to={`/event/${event.id}`} key={event.id}>
-                                        <div className="hover:bg-gray-700 hover: rounded-lg px-2 border-gray-700 border-none">
-                                            <p className="text-gray-400 pb-2 text-sm ml-4"> {event.description} </p>
-                                            <p className="text-gray-400 pt-3 pb-2 text-sm ml-4">
-                                                Starts at: {event.startTime}
-                                            </p>
+                                <Link to={`/event/${event.id}`} key={event.id}>
+                                    <div className="hover:bg-gray-700 hover: rounded-lg px-2 border-gray-700 border-none">
+                                        <p className="text-gray-400 pb-2 text-sm ml-4"> {event.description} </p>
+                                        <p className="text-gray-400 pt-3 pb-2 text-sm ml-4">
+                                            Starts at: {event.startTime}
+                                        </p>
+                                        {event.acceptedUsers[0] &&
+
                                             <small className="flex flex-shrink justify-between pt-2 text-gray-500 ml-4">
                                                 <span className="font-semibold">
                                                     Host: {event.acceptedUsers[0].username}
                                                 </span>
                                                 <span>Attending: {event.acceptedUsers.length}</span>
                                             </small>
-                                        </div>
-                                    </Link>
-                                    }
+                                        }
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -56,22 +56,37 @@ export const getUserById = async (userId) => {
 };
 
 export async function GetUserByName(data) {
-    const response = await fetch('https://localhost:7240/api/v1/Users/users', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + keycloak.token
-        },
-        body: JSON.stringify(data)
-    });
+  const response = await fetch('https://localhost:7240/api/v1/Users/users', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + keycloak.token
+    },
+    body: JSON.stringify(data)
+  });
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const responseData = await response.json();
-    return responseData;
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const responseData = await response.json();
+  return responseData;
 }
+
+
+export const UpdateUser = async (userId, data) => {
+  const response = await fetch(`https://localhost:7240/api/v1/Users/${userId}`, {
+    method: "PUT",
+    headers: createHeaders(),
+    body: JSON.stringify(data)
+  });
+  if (response.ok) {
+    const updatedUser = await response.json();
+    return updatedUser;
+  } else {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+};
 
 // export async function postUserInfo(data) {
 //     const response = await fetch('https://localhost:7240/api/v1/Users', {

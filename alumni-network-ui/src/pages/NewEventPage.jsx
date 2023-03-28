@@ -23,8 +23,7 @@ function NewEventPage() {
         event.preventDefault();
         try {
             const response = await AddEvent(eventData);
-            const response2 = await CreateGroupEventInvitation(response.id, parseInt(groupId));
-            console.log(response2)
+            await CreateGroupEventInvitation(response.id, parseInt(groupId));
             formRef.current.reset();
             setEventData({
                 name: "",
@@ -61,9 +60,10 @@ function NewEventPage() {
                     <input onChange={handleChange} type="text" id="name" name="name" className="font-bold bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></input>
                 </div>
                 <div>
-                    <label htmlFor="description" className="block mb-2 font-bold text-gray-900 dark:text-white">Description</label>
-                    <textarea onChange={handleChange} rows="4" id="description" name="description" className="resize-none font-bold bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></textarea>
+                    <label htmlFor="bannerImage" className="block mb-2 font-bold text-gray-900 dark:text-white">Banner Image URL</label>
+                    <input onChange={handleChange} type="text" id="bannerImage" name="bannerImage" className="font-bold bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></input>
                 </div>
+
                 <div>
                     <label htmlFor="startTime" className="block mb-2 font-bold text-gray-900 dark:text-white">Start Time</label>
                     <input onChange={handleChange} type="datetime-local" id="startTime" name="startTime" className="font-bold bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
@@ -76,9 +76,9 @@ function NewEventPage() {
                     <input onChange={handleChange} type="checkbox" id="allowGuests" name="allowGuests" className="mr-2" style={{ width: '20px', height: '20px' }} />
                     <label htmlFor="allowGuests" className="font-bold text-gray-900 dark:text-white">Allow Guests</label>
                 </div>
-                <div>
-                    <label htmlFor="bannerImage" className="block mb-2 font-bold text-gray-900 dark:text-white">Banner Image URL</label>
-                    <input onChange={handleChange} type="text" id="bannerImage" name="bannerImage" className="font-bold bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></input>
+                <div className="w-max">
+                    <label htmlFor="description" className="block mb-2 font-bold text-gray-900 dark:text-white">Description</label>
+                    <textarea onChange={handleChange} rows="4" id="description" name="description" className="resize-none font-bold bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder=""></textarea>
                 </div>
                 <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-semibold rounded-lg w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Create Event</button>
             </form >

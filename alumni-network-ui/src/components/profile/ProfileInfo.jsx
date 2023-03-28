@@ -1,15 +1,19 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useUser } from "../../context/UserContext";
 import keycloak from "../../keycloak";
 import { storageSave } from "../../utils/storage";
 import { STORAGE_KEY_USER } from "../../utils/storageKeys";
+import { UpdateUser } from "../../api/user";
 
 function ProfilePage() {
-
     const { user, setUser } = useUser();
+    const formRef = useRef();
+    const [successMessage, setSuccessMessage] = useState("");
 
     const storedUser = user;
-    const [username, setUsername] = useState(storedUser?.username ?? keycloak.tokenParsed.preferred_username);
+    const [username, setUsername] = useState(
+        storedUser?.username ?? keycloak.tokenParsed.preferred_username
+    );
     const [bio, setBio] = useState(storedUser?.bio ?? "");
     const [funFact, setFunFact] = useState(storedUser?.funFact ?? "");
     const [picture, setPicture] = useState(storedUser?.picture ?? "");
@@ -17,16 +21,14 @@ function ProfilePage() {
 
     const handleUpdateProfile = async (event) => {
         event.preventDefault();
-        const response = await fetch(`https://localhost:7240/api/v1/Users/${storedUser.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${keycloak.token}`,
-            },
-            body: JSON.stringify({ username, bio, funFact, picture, status }),
-        });
-        if (response.ok) {
-            const updatedUser = await response.json();
+        try {
+            const updatedUser = await UpdateUser(storedUser.id, {
+                username,
+                bio,
+                funFact,
+                picture,
+                status,
+            });
             setUsername(updatedUser.username);
             setBio(updatedUser.bio);
             setFunFact(updatedUser.funFact);
@@ -34,15 +36,18 @@ function ProfilePage() {
             setStatus(updatedUser.status);
             storageSave(STORAGE_KEY_USER, updatedUser); // Update stored user data
             setUser(updatedUser);
-        } else {
-            // handle error
+            formRef.current.reset();
+            setSuccessMessage("Profile successfully updated!");
+        } catch (error) {
+            console.error(error);
         }
     };
 
     return (
         <div className="flex flex-col justify-center items-center pt-12 text-center">
             <h3 className="pb-12 font-bold text-xl">Profile</h3>
-            <form onSubmit={handleUpdateProfile}>
+            {successMessage && <p className="text-green-600 pb-4">{successMessage}</p>}
+            <form ref={formRef} onSubmit={handleUpdateProfile}>
                 <div className="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label htmlFor="username" className="block mb-2 font-bold text-gray-900 dark:text-white">Username</label>
