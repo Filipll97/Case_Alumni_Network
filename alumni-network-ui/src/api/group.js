@@ -4,10 +4,6 @@ import { createHeaders } from "./ApiIndex";
 
 export const getGroups = async () => {
   try {
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch("https://localhost:7240/api/v1/Groups", {
       method: 'GET',
       headers: createHeaders()
@@ -30,10 +26,6 @@ export const getGroups = async () => {
 
 export const getGroupById = async (groupId) => {
   try {
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-    
     const response = await fetch(`https://localhost:7240/api/v1/groups/${groupId}`, {
       method: 'GET',
       headers: createHeaders()
@@ -56,10 +48,6 @@ export const getGroupById = async (groupId) => {
 
 export const AddUserToGroup = async (groupId) => {
   try {
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch(`https://localhost:7240/api/v1/groups/${groupId}/join`, {
       method: 'POST',
       headers: createHeaders()
@@ -82,10 +70,6 @@ export const AddUserToGroup = async (groupId) => {
 
 export const CreateGroup = async (groupData) => {
   try {
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch(`https://localhost:7240/api/v1/groups`, {
       method: 'POST',
       headers: createHeaders(),

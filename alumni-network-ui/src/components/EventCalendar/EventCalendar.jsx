@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function EventCalendar({ events }) {
   const [calendarEvents, setCalendarEvents] = useState([]);
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const formattedEvents = events.map((event) => ({

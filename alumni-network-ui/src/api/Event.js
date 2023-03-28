@@ -4,10 +4,6 @@ import { createHeaders } from "./ApiIndex";
 
 export const getEvents = async () => {
   try {
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch("https://localhost:7240/api/v1/Event", {
       method: 'GET',
       headers: createHeaders()
@@ -29,10 +25,6 @@ export const getEvents = async () => {
 
 export const AddEvent = async (eventData) => {
   try {
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch("https://localhost:7240/api/v1/Event", {
       method: "POST",
       headers: createHeaders(),
@@ -52,10 +44,6 @@ export const AddEvent = async (eventData) => {
 
 export const CreateGroupEventInvitation = async (eventId, groupId) => {
   try {
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch(`https://localhost:7240/api/v1/Event/${eventId}/invite/group/${groupId}`, {
       method: "POST",
       headers: createHeaders(),

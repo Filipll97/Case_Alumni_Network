@@ -3,11 +3,6 @@ import { createHeaders } from "./ApiIndex";
 
 export const getUserPosts = async () => {
   try {
-    // Refresh token if it is expired or will expire soon
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch("https://localhost:7240/api/v1/Posts", {
       method: 'GET',
       headers: createHeaders()
@@ -29,11 +24,6 @@ export const getUserPosts = async () => {
 
 export const getPostById = async (postId) => {
   try {
-    // Refresh token if it is expired or will expire soon
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch(`https://localhost:7240/api/v1/Posts/user/${postId}`, {
       method: 'GET',
       headers: createHeaders()
@@ -56,11 +46,6 @@ export const getPostById = async (postId) => {
 
 export const getGroupPosts = async (groupId) => {
   try {
-    // Refresh token if it is expired or will expire soon
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch(`https://localhost:7240/api/v1/posts/group/${groupId}`, {
       method: 'GET',
       headers: createHeaders()
@@ -83,11 +68,6 @@ export const getGroupPosts = async (groupId) => {
 
 export const getEventPosts = async (eventId) => {
   try {
-    // Refresh token if it is expired or will expire soon
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch(`https://localhost:7240/api/v1/posts/event/${eventId}`, {
       method: 'GET',
       headers: createHeaders()
@@ -111,12 +91,6 @@ export const getEventPosts = async (eventId) => {
 
 export const createPost = async (postData) => {
   try {
-    console.log(postData)
-    // Refresh token if it is expired or will expire soon
-    if (keycloak.token && keycloak.isTokenExpired()) {
-      await keycloak.updateToken();
-    }
-
     const response = await fetch(`https://localhost:7240/api/v1/Posts`, {
       method: "POST",
       headers: createHeaders(),

@@ -4,6 +4,7 @@ import keycloak from "../../keycloak";
 import { storageSave } from "../../utils/storage";
 import { STORAGE_KEY_USER } from "../../utils/storageKeys";
 import { UpdateUser } from "../../api/user";
+import updateTokenAndExecute from "../../utils/keycloakUtils";
 
 function ProfilePage() {
     const { user, setUser } = useUser();
@@ -22,22 +23,24 @@ function ProfilePage() {
     const handleUpdateProfile = async (event) => {
         event.preventDefault();
         try {
-            const updatedUser = await UpdateUser(storedUser.id, {
-                username,
-                bio,
-                funFact,
-                picture,
-                status,
-            });
-            setUsername(updatedUser.username);
-            setBio(updatedUser.bio);
-            setFunFact(updatedUser.funFact);
-            setPicture(updatedUser.picture);
-            setStatus(updatedUser.status);
-            storageSave(STORAGE_KEY_USER, updatedUser); // Update stored user data
-            setUser(updatedUser);
-            formRef.current.reset();
-            setSuccessMessage("Profile successfully updated!");
+            await updateTokenAndExecute(async () => {
+                const updatedUser = await UpdateUser(storedUser.id, {
+                    username,
+                    bio,
+                    funFact,
+                    picture,
+                    status,
+                });
+                setUsername(updatedUser.username);
+                setBio(updatedUser.bio);
+                setFunFact(updatedUser.funFact);
+                setPicture(updatedUser.picture);
+                setStatus(updatedUser.status);
+                storageSave(STORAGE_KEY_USER, updatedUser); // Update stored user data
+                setUser(updatedUser);
+                formRef.current.reset();
+                setSuccessMessage("Profile successfully updated!");
+            })
         } catch (error) {
             console.error(error);
         }

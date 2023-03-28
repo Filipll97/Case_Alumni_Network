@@ -9,6 +9,7 @@ import PostList from "../components/Post/PostList";
 import GroupsModal from "../components/Group/GroupsModal";
 import SearchBar from "../components/Post/SearchBar";
 import TopicList from "../components/Topic/TopicList";
+import updateTokenAndExecute from "../utils/keycloakUtils";
 
 function DashBoardPage() {
     const { user, setUser } = useUser()
@@ -19,60 +20,36 @@ function DashBoardPage() {
     const [filteredPosts, setFilteredPosts] = useState();
     const [searchQuery, setSearchQuery] = useState("");
     const [activeTopics, setActiveTopics] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     const toggleGroupsModal = () => {
         setShowGroupsModal(!showGroupsModal);
     };
 
-    useEffect(() => {
-        if (user) {
-            const fetchData = async () => {
-                try {
-                    const postData = await getUserPosts();
-                    if (postData) {
-                        setPosts(postData);
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
+    const fetchData = async () => {
+        setIsLoading(true);
+        await updateTokenAndExecute(async () => {
+            try {
+                const [postData, groupData, topicData] = await Promise.all([
+                    getUserPosts(),
+                    getGroups(),
+                    getTopics(),
+                ]);
 
-            };
-            fetchData()
-        }
-    }, [user]);
-
-
-    useEffect(() => {
-        if (user) {
-            const fetchData = async () => {
-                try {
-                    const groupData = await getGroups();
-                    if (groupData) {
-                        setGroups(groupData);
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-
-            };
-            fetchData()
-        }
-    }, [user]);
+                setPosts(postData || []);
+                setGroups(groupData || []);
+                setTopics(topicData || []);
+            } catch (error) {
+                console.log(error);
+            } finally {
+                setIsLoading(false);
+            }
+        });
+    };
 
     useEffect(() => {
         if (user) {
-            const fetchData = async () => {
-                try {
-                    const topicData = await getTopics();
-                    if (topicData) {
-                        setTopics(topicData);
-                    }
-                } catch (error) {
-                    console.log(error);
-                }
-
-            };
-            fetchData()
+            fetchData();
         }
     }, [user]);
 
@@ -97,13 +74,13 @@ function DashBoardPage() {
         }
     };
 
-    if (!user) {
+    if (isLoading) {
         return <div>Loading Dashboard...</div>;
     }
     return (
         <div className="container mx-auto">
             <div className="mt-6 lg:col-span-3 col-span-6 flex justify-center">
-                {console.log(keycloak.token)}
+                {/* {console.log(keycloak.token)} */}
                 <SearchBar onSearch={setSearchQuery} />
             </div>
             <div className="relative">
