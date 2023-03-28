@@ -26,3 +26,47 @@ export const getEvents = async () => {
     console.error(error);
   }
 };
+
+export const AddEvent = async (eventData) => {
+  try {
+    if (keycloak.token && keycloak.isTokenExpired()) {
+      await keycloak.updateToken();
+    }
+
+    const response = await fetch("https://localhost:7240/api/v1/Event", {
+      method: "POST",
+      headers: createHeaders(),
+      body: JSON.stringify(eventData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const CreateGroupEventInvitation = async (eventId, groupId) => {
+  try {
+    if (keycloak.token && keycloak.isTokenExpired()) {
+      await keycloak.updateToken();
+    }
+
+    const response = await fetch(`https://localhost:7240/api/v1/Event/${eventId}/invite/group/${groupId}`, {
+      method: "POST",
+      headers: createHeaders(),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};
