@@ -46,12 +46,7 @@ Follow these steps to set up and run the Alumni Network application locally:
 
     npm install
 
-4. Set up environment variables:
-
-    Create a `.env` file in the root directory of the project and add the following variables: 
-    [TODO]: Add this part!
-
-5. Start the development server:
+4. Start the development server:
 
     npm start
 
