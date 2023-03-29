@@ -24,6 +24,7 @@ The Alumni Network application offers the following key functionalities:
 - Calendar view for event tracking
 - Reusable components for modularity
 
+Link to backend part of the application: [Alumni Network BE](https://github.com/TintinPetersson/AlumniNetworkAPI)
 ## Requirements
 Before you begin, ensure your development environment meets the following requirements:
 
