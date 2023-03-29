@@ -59,6 +59,8 @@ The application should now be running on `http://localhost:3000`.
 
 ## Usage
 
+[View the User Guide](USER_GUIDE.md)
+
 1. Visit `http://localhost:3000` in your browser.
 2. Log in with your Keycloak credentials.
 3. Explore the application features like timeline, user profiles, groups, topics, and events.
